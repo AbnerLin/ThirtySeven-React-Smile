@@ -16,10 +16,7 @@ class MainPage extends React.Component {
     }
 
     componentWillMount() {
-        ThirtySeven.Ajax({
-            method: 'get',
-            url: 'auth'
-        }).then(res => {
+        ThirtySeven.ajax().get('auth').then(res => {
             if(res && res._status === true) {
                 this.setState({
                     loading: false
