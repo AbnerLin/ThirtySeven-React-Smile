@@ -2,9 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import './index.css';
-import App from './App';
 
+import App from './App';
+import Header from './Header';
+import Footer from './Footer';
 import ThirtySeven from './CommonUtils/ThirtySeven.js';
+import Config from './config.json';
 
 class MainPage extends React.Component {
 
@@ -27,7 +30,13 @@ class MainPage extends React.Component {
 
     render() {
         if (!this.state.loading) {
-            return (<App />);
+            return (
+              <div>
+                <Header title={Config.Title} />
+                <App />
+                <Footer copyright={Config.Copyright} />
+              </div>
+            );
         }
         return null;
     }
