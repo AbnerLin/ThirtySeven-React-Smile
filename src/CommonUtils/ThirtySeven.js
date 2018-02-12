@@ -29,14 +29,7 @@ class ThirtySeven {
         });
     }
    
-    /**
-     * @element show loading on specified element.
-     */
-    ajax(elementId) {
-        if (elementId) {
-            // TODO show loading...
-            console.log('got element');
-        }
+    get ajax() {
         return this._axios;
     }
 }

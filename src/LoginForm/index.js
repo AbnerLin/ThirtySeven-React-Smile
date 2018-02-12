@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Input, Form, Alert } from 'reactstrap';
+import './index.css';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Form, Alert, InputGroup, InputGroupAddon } from 'reactstrap';
 
 import ThirtySeven from '../CommonUtils/ThirtySeven.js';
 import App from '../App';
@@ -47,7 +48,7 @@ class LoginForm extends React.Component {
 
     login(event) {
         event.preventDefault();
-        ThirtySeven.ajax("LoginForm-Modal").post('auth/login', {
+        ThirtySeven.ajax.post('auth/login', {
             username: this.state.account,
             password: this.state.password
         }).then(res => {
@@ -56,7 +57,7 @@ class LoginForm extends React.Component {
                     errorMsg: res._msg
                 });
             } else {
-                ReactDOM.render( <App /> , document.getElementById('root'));
+                ReactDOM.render(<App /> , document.getElementById('root'));
             }
         });
     }
@@ -64,7 +65,7 @@ class LoginForm extends React.Component {
     render() {
         return (
             <div>
-              <Modal isOpen={this.state.modalShow} toggle={this.toggle} id="LoginForm-Modal" className="modal-lg modal-dialog-centered">
+              <Modal isOpen={this.state.modalShow} toggle={this.toggle} className="modal-lg modal-dialog-centered">
                   <ModalHeader toggle={this.toggle}>{''}</ModalHeader>
                     <ModalBody>
                       <div className="container-fluid">
@@ -74,29 +75,35 @@ class LoginForm extends React.Component {
                               </div>
                               <div className="col-12 col-sm-6 d-flex align-items-sm-center align-items-start justify-content-center justify-content-sm-start">
                                   <Form id="LoginForm">
-                                      <FormGroup className="mb-2 mr-sm-2 mb-sm-0 col-12">
-                                          <Label for="account" className="mr-sm-2">帳號</Label>
-                                          <Input 
+                                      <FormGroup className="mb-2 mr-sm-2 col-12">
+                                          <InputGroup>
+                                            <InputGroupAddon addonType="prepend">帳號</InputGroupAddon>
+                                            <Input 
                                               type="text" 
                                               name="account" 
                                               value={this.state.account} 
                                               onChange={this.handleChange} />
+                                          </InputGroup>
                                       </FormGroup>
-                                      <FormGroup className="mb-2 mr-sm-2 mb-sm-0 col-12">
-                                          <Label for="password" className="mr-sm-2">密碼</Label>
-                                          <Input 
+                                      <FormGroup className="mb-2 mr-sm-2 col-12">
+                                          <InputGroup>
+                                            <InputGroupAddon addonType="prepend">密碼</InputGroupAddon>
+                                            <Input 
                                               type="password" 
                                               name="password" 
                                               value={this.state.password} 
                                               onChange={this.handleChange} />
+                                          </InputGroup>
                                       </FormGroup>
                                   </Form>
                               </div>
                           </div>
                       </div>
-                          <Alert isOpen={this.state.errorMsg ? true : false} color="danger" className="mt-3">
+                      <div>
+                          <Alert isOpen={this.state.errorMsg ? true : false} color="danger" className="alertMsg text-center mb-0 col-6 mt-3">
                                 {this.state.errorMsg}
                           </Alert>
+                      </div>
                   </ModalBody>
                   <ModalFooter>
                       <Button 
