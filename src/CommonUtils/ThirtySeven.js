@@ -15,14 +15,14 @@ class ThirtySeven {
     init() {
         this._axios = axios.create({
             baseURL: ThirtySeven.API_URL,
+            withCredentials: true
         });
 
         this._axios.interceptors.response.use((res) => {
-            if (res.data._status && res.data._code === '0200') {
+            if (res.data._code === '0200') {
                 return res.data;
             } else {
-                // TODO overlay the login page.
-                ReactDOM.render( < LoginForm / > , document.getElementById('root'));
+                ReactDOM.render( <LoginForm /> , document.getElementById('root'));
             }
         }, (err) => {
             return Promise.reject(err);
