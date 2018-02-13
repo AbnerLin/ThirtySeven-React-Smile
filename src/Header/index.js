@@ -6,9 +6,14 @@ class Header extends React.Component {
 
     render() {
         return (
-            <header className="text-center p-2">
-              <h1>{this.props.title}</h1>
-            </header>
+            <div id="headerBlock">
+              <div className="text-center">
+                <img src="/images/logo.png" className="bigLogo" alt="logo" />
+              </div>
+              <header className="text-center">
+                <div className="title">{this.props.title}</div>
+              </header>
+            </div>
         );
     }
 }

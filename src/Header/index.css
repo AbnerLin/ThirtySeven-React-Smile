@@ -1,8 +1,31 @@
+#headerBlock {
+    padding-top: 10px;
+    background-color: #FFA500;
+}
+
 header {
-    background-color: black;
     color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.bigLogo {
+    width: 60px;
+    margin-left: 0px;
 }
 
 .title {
+    display: none;
+}
 
+@media screen and (min-width: 576px) {
+    .bigLogo {
+        width: 120px;
+        margin-left: -25px;
+    }
+
+    .title {
+        display: block;
+    }
 }

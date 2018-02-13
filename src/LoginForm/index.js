@@ -5,7 +5,7 @@ import './index.css';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Form, Alert, InputGroup, InputGroupAddon } from 'reactstrap';
 
 import ThirtySeven from '../CommonUtils/ThirtySeven.js';
-import App from '../App';
+import MainPage from '../index.js';
 
 class LoginForm extends React.Component {
 
@@ -57,7 +57,7 @@ class LoginForm extends React.Component {
                     errorMsg: res._msg
                 });
             } else {
-                ReactDOM.render(<App /> , document.getElementById('root'));
+                ReactDOM.render(<MainPage /> , document.getElementById('root'));
             }
         });
     }

@@ -32,7 +32,7 @@ class MainPage extends React.Component {
         if (!this.state.loading) {
             return (
               <div>
-                <Header title={Config.Title} />
+                <Header title={Config.Title} subTitle={Config.SubTitle} />
                 <App />
                 <Footer copyright={Config.Copyright} />
               </div>
@@ -43,3 +43,4 @@ class MainPage extends React.Component {
 }
 
 ReactDOM.render(<MainPage />, document.getElementById('root'));
+export default MainPage;
