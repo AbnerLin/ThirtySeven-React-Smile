@@ -1,5 +1,6 @@
 import React from 'react';
 import ThirtySeven from '../CommonUtils/ThirtySeven.js';
+import Map from '../Map';
 
 class App extends React.Component {
     
@@ -15,13 +16,12 @@ class App extends React.Component {
             this.setState({
                 diningCustomer: res._data
             });
-            console.log(res._data);
         });
     }
 
     render() {
         return (
-            <div> Index.. </div>
+            <Map> Index.. </Map>
         );
     }
 }
