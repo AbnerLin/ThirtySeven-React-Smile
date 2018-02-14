@@ -1,6 +1,6 @@
 import React from 'react';
 import ThirtySeven from '../CommonUtils/ThirtySeven.js';
-import {DraggableCore} from 'react-draggable';
+import Draggable from 'react-draggable'
 
 import './index.css';
 
@@ -10,8 +10,11 @@ class Map extends React.Component {
         super(props);
 
         this.state = {
-            style: null
+            style: null,
+            mapInfo: null
         };
+
+        this.furnishOnClick = this.furnishOnClick.bind(this);
     }
 
     getMapInfo() {
@@ -21,7 +24,8 @@ class Map extends React.Component {
                 height: res._data.height
             };
             this.setState({
-                style: _style
+                style: _style,
+                mapInfo: res._data
             });
         });
     }
@@ -36,16 +40,39 @@ class Map extends React.Component {
         }
     }
 
+    furnishOnClick() {
+        console.log('!');
+    }
+
     render() {
+        var furnishList = null;
+
+        if(this.state.mapInfo) {
+            furnishList = this.state.mapInfo.furnishList.map((furnish) => {
+                return (
+                    <Draggable key={furnish.furnishid}
+                        bounds="parent"
+                        axis="both"
+                        handle=".handle"
+                        defaultPosition={{x: furnish.x, y: furnish.y}}>
+                        <div className="box">
+                          <div className="handle dragBtn">??</div>
+                          <div onClick={this.furnishOnClick}>IIII</div>
+                        </div>
+                    </Draggable>
+                );
+            });
+
+        }
+
         return (
           <div className="mapContainer">
             <div className="map" style={this.state.style}>
-              {this.props.map.name}
+              {furnishList}
             </div>
           </div>
         );
     }
-
 }
 
 export default Map;
