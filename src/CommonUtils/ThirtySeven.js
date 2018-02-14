@@ -6,7 +6,7 @@ const axios = require('axios');
 
 class ThirtySeven {
 
-    static API_URL = 'http://localhost:3000/api';
+    static API_URL = 'http://192.168.9.180:3000/api';
 
     constructor() {
         this.init();

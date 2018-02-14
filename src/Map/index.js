@@ -10,28 +10,38 @@ class Map extends React.Component {
         super(props);
 
         this.state = {
-            map: null,
             style: null
         };
     }
 
-    componentWillMount() {
-        ThirtySeven.ajax.get('map').then(res => {
+    getMapInfo() {
+        ThirtySeven.ajax.get('map/' + this.props.map.mapid).then(res => {
             var _style = {
-                width: res._data[0].width,
-                height: res._data[0].height
+                width: res._data.width,
+                height: res._data.height
             };
             this.setState({
-                map: res._data[0],
                 style: _style
             });
         });
     }
 
+    componentDidMount() {
+        this.getMapInfo();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.map !== this.props.map) {
+            this.getMapInfo();
+        }
+    }
+
     render() {
         return (
-          <div className="map" style={this.state.style}>
-            map
+          <div className="mapContainer">
+            <div className="map" style={this.state.style}>
+              {this.props.map.name}
+            </div>
           </div>
         );
     }

@@ -2,5 +2,10 @@
     background-color: #DAF7A6;
     opacity: 0.3;
     margin: auto;
-    margin-top: 10px;
+}
+
+.mapContainer {
+    width: 100%;
+    overflow: scroll;
+    padding: 10px;
 }

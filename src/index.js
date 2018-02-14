@@ -14,8 +14,7 @@ class MainPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            loading: true,
-            error: '' //TODO
+            loading: true
         };
     }
 
@@ -26,10 +25,6 @@ class MainPage extends React.Component {
                     loading: false
                 });
             }
-        }).catch(err => {
-            this.setState({
-                error: JSON.stringify(err) //TODO
-            })
         }); 
     }
 
@@ -40,13 +35,10 @@ class MainPage extends React.Component {
                 <Header title={Config.Title} subTitle={Config.SubTitle} />
                 <App />
                 <Footer copyright={Config.Copyright} />
-
               </div>
             );
         }
-        return (
-            <div>{this.state.error}</div> //TODO
-        );
+        return null;
     }
 }
 
