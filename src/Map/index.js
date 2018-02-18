@@ -1,7 +1,8 @@
 import React from 'react';
 import ThirtySeven from '../CommonUtils/ThirtySeven.js';
-import Draggable from 'react-draggable'
-
+import Draggable from 'react-draggable';
+import * as Typicons from 'react-icons/lib/ti'
+import * as FontAwesome from 'react-icons/lib/fa'
 import './index.css';
 
 class Map extends React.Component {
@@ -11,10 +12,12 @@ class Map extends React.Component {
 
         this.state = {
             style: null,
-            mapInfo: null
+            mapInfo: null,
+            control: true // TODO
         };
 
         this.furnishOnClick = this.furnishOnClick.bind(this);
+        this.furnishOnDelete = this.furnishOnDelete.bind(this);
     }
 
     getMapInfo() {
@@ -41,7 +44,12 @@ class Map extends React.Component {
     }
 
     furnishOnClick() {
-        console.log('!');
+        console.log('!'); // TODO
+    }
+
+    furnishOnDelete(furnishId) {
+        // TODO
+        console.log(furnishId + ' on delete.');
     }
 
     render() {
@@ -56,13 +64,22 @@ class Map extends React.Component {
                         handle=".handle"
                         defaultPosition={{x: furnish.x, y: furnish.y}}>
                         <div className="box">
-                          <div className="handle dragBtn">??</div>
+                          {
+                            this.state.control ?
+                            (<div className="control">
+                              <div className="handle">
+                                <Typicons.TiAttachmentOutline />
+                              </div>
+                              <div onClick={ () => this.furnishOnDelete(furnish.furnishid) }>
+                                <FontAwesome.FaClose />
+                              </div>
+                            </div>) : null
+                          }
                           <div onClick={this.furnishOnClick}>IIII</div>
                         </div>
                     </Draggable>
                 );
             });
-
         }
 
         return (

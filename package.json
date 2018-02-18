@@ -8,11 +8,12 @@
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-draggable": "^3.0.5",
+    "react-icons": "^2.2.7",
     "react-scripts": "1.1.0",
     "reactstrap": "^5.0.0-beta"
   },
   "scripts": {
-    "start": "SET PORT=3001 && react-scripts start",
+    "start": "PORT=3001 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
