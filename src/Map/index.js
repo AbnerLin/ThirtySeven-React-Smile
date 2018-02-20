@@ -53,31 +53,36 @@ class Map extends React.Component {
     }
 
     render() {
-        var furnishList = null;
+        var optionBar = (furnishId) => {
+          if(this.state.control) {
+            return (
+              <div className="control">
+                <div className="handle">
+                  <Typicons.TiAttachmentOutline />
+                </div>
+                <div onClick={ () => this.furnishOnDelete(furnishId) }>
+                  <FontAwesome.FaClose />
+                </div>
+              </div>
+            );
+          }
+          return null;
+        };
 
+        var furnishList = null;
         if(this.state.mapInfo) {
             furnishList = this.state.mapInfo.furnishList.map((furnish) => {
                 return (
-                    <Draggable key={furnish.furnishid}
-                        bounds="parent"
-                        axis="both"
-                        handle=".handle"
-                        defaultPosition={{x: furnish.x, y: furnish.y}}>
-                        <div className="box">
-                          {
-                            this.state.control ?
-                            (<div className="control">
-                              <div className="handle">
-                                <Typicons.TiAttachmentOutline />
-                              </div>
-                              <div onClick={ () => this.furnishOnDelete(furnish.furnishid) }>
-                                <FontAwesome.FaClose />
-                              </div>
-                            </div>) : null
-                          }
-                          <div onClick={this.furnishOnClick}>IIII</div>
-                        </div>
-                    </Draggable>
+                  <Draggable key={furnish.furnishid}
+                    bounds="parent"
+                    axis="both"
+                    handle=".handle"
+                    defaultPosition={{x: furnish.x, y: furnish.y}}>
+                    <div className="box">
+                      { optionBar(furnish.furnishid) }
+                      <div onClick={this.furnishOnClick}>IIII</div>
+                    </div>
+                  </Draggable>
                 );
             });
         }
