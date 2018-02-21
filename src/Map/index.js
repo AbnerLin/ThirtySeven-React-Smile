@@ -1,8 +1,6 @@
 import React from 'react';
 import ThirtySeven from '../CommonUtils/ThirtySeven.js';
-import Draggable from 'react-draggable';
-import * as Typicons from 'react-icons/lib/ti'
-import * as FontAwesome from 'react-icons/lib/fa'
+import Furnish from './Furnish'
 import './index.css';
 
 class Map extends React.Component {
@@ -15,9 +13,6 @@ class Map extends React.Component {
             mapInfo: null,
             control: true // TODO
         };
-
-        this.furnishOnClick = this.furnishOnClick.bind(this);
-        this.furnishOnDelete = this.furnishOnDelete.bind(this);
     }
 
     getMapInfo() {
@@ -43,54 +38,24 @@ class Map extends React.Component {
         }
     }
 
-    furnishOnClick() {
-        console.log('!'); // TODO
-    }
-
-    furnishOnDelete(furnishId) {
-        // TODO
-        console.log(furnishId + ' on delete.');
-    }
-
     render() {
-        var optionBar = (furnishId) => {
-          if(this.state.control) {
-            return (
-              <div className="control">
-                <div className="handle">
-                  <Typicons.TiAttachmentOutline />
-                </div>
-                <div onClick={ () => this.furnishOnDelete(furnishId) }>
-                  <FontAwesome.FaClose />
-                </div>
-              </div>
-            );
-          }
-          return null;
-        };
+        const FurnishList = () => {
+            const itemList = this.state.mapInfo ? this.state.mapInfo.furnishList : null;
+            var items = null;
 
-        var furnishList = null;
-        if(this.state.mapInfo) {
-            furnishList = this.state.mapInfo.furnishList.map((furnish) => {
-                return (
-                  <Draggable key={furnish.furnishid}
-                    bounds="parent"
-                    axis="both"
-                    handle=".handle"
-                    defaultPosition={{x: furnish.x, y: furnish.y}}>
-                    <div className="box">
-                      { optionBar(furnish.furnishid) }
-                      <div onClick={this.furnishOnClick}>IIII</div>
-                    </div>
-                  </Draggable>
-                );
-            });
-        }
+            if (itemList) {
+                items = itemList.map((item) => {
+                    return <Furnish key={item.furnishid} control={this.state.control} furnish={item} />
+                });
+            }
+
+            return items;
+        };
 
         return (
           <div className="mapContainer">
             <div className="map" style={this.state.style}>
-              {furnishList}
+              <FurnishList />
             </div>
           </div>
         );

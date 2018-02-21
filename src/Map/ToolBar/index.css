@@ -1,0 +1,14 @@
+.control {
+    position: absolute;
+    right: 5px;
+    width: 72px;
+}
+
+.control>div {
+    float: right;
+    margin: 0 1px 0 1px;
+}
+
+.control>div:hover {
+    color: red;
+}
