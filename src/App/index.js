@@ -40,18 +40,18 @@ class App extends React.Component {
             return (
               <div>
                 <div className="mt-3">
-                    <Nav tabs>
-                        {this.state.maps.map((_map, index) => 
-                            <NavItem key={_map.mapid}>
-                                <NavLink 
-                                    href="#" 
-                                    active={index === this.state.focusTabIndex} 
-                                    onClick={() => this.navOnClick(index, _map.mapid)}>
-                                        {_map.name}
-                                </NavLink>
-                            </NavItem>
-                        )}
-                    </Nav>
+                  <Nav tabs>
+                    {this.state.maps.map((_map, index) => 
+                      <NavItem key={_map.mapid}>
+                        <NavLink 
+                          href="#" 
+                          active={index === this.state.focusTabIndex} 
+                          onClick={() => this.navOnClick(index, _map.mapid)}>
+                              {_map.name}
+                        </NavLink>
+                      </NavItem>
+                    )}
+                  </Nav>
                 </div>
                 <div>
                   <Map map={this.state.maps[this.state.focusTabIndex]} />

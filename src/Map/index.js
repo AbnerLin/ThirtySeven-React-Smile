@@ -11,8 +11,10 @@ class Map extends React.Component {
         this.state = {
             style: null,
             mapInfo: null,
-            control: true // TODO
+            control: false
         };
+
+        this.onKeyDown = this.onKeyDown.bind(this);
     }
 
     getMapInfo() {
@@ -28,8 +30,17 @@ class Map extends React.Component {
         });
     }
 
+    onKeyDown(event) {
+        if(event.keyCode === 18 || event.keyCode === 17) {
+            this.setState({
+                control: !this.state.control
+            });
+        }
+    }
+
     componentDidMount() {
         this.getMapInfo();
+        document.addEventListener('keydown', this.onKeyDown);
     }
 
     componentDidUpdate(prevProps) {
