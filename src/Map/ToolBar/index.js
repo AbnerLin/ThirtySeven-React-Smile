@@ -5,28 +5,28 @@ import './index.css';
 
 class ToolBar extends React.Component {
 
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.furnishOnDelete = this.furnishOnDelete.bind(this);
-    }
+    this.furnishOnDelete = this.furnishOnDelete.bind(this);
+  }
 
-    furnishOnDelete(furnishId) {
-        console.log(furnishId + ' on delete.');
-    }
+  furnishOnDelete(furnishId) {
+    console.log(furnishId + ' on delete.');
+  }
 
-    render() {
-        return(
-            <div className="control">
-              <div className="handle">
-                <Typicons.TiAttachmentOutline />
-              </div>
-              <div onClick={ () => this.furnishOnDelete(this.props.furnish.furnishid) }>
-                <FontAwesome.FaClose />
-              </div>
-            </div>
-        );
-    }
+  render() {
+    return(
+      <div className="control">
+        <div className="handle">
+          <Typicons.TiAttachmentOutline />
+        </div>
+        <div onClick={ () => this.furnishOnDelete(this.props.furnish.furnishid) }>
+          <FontAwesome.FaClose />
+        </div>
+      </div>
+    );
+  }
 }
 
 export default ToolBar;
