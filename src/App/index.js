@@ -17,11 +17,12 @@ class App extends React.Component {
     }
 
     componentWillMount() {
-        // ThirtySeven.ajax.get('customer').then(res => {
-        //     this.setState({
-        //         diningCustomer: res._data
-        //     });
-        // });
+        ThirtySeven.ajax.get('customer').then(res => {
+            // this.setState({
+            //     diningCustomer: res._data
+            // });
+            console.log(res._data);
+        });
         ThirtySeven.ajax.get('map').then(res => {
             this.setState({
                 maps: res._data
