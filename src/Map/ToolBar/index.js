@@ -8,11 +8,11 @@ class ToolBar extends React.Component {
   constructor(props) {
     super(props);
 
-    this.furnishOnDelete = this.furnishOnDelete.bind(this);
+    this.onDelete = this.onDelete.bind(this);
   }
 
-  furnishOnDelete(furnishId) {
-    console.log(furnishId + ' on delete.');
+  onDelete(furnishId) {
+    this.props.onDelete(furnishId);
   }
 
   render() {
@@ -21,7 +21,7 @@ class ToolBar extends React.Component {
         <div className="handle">
           <Typicons.TiAttachmentOutline />
         </div>
-        <div onClick={ () => this.furnishOnDelete(this.props.furnish.furnishid) }>
+        <div onClick={ () => this.onDelete(this.props.furnish.furnishid) }>
           <FontAwesome.FaClose />
         </div>
       </div>
