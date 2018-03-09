@@ -1,9 +1,11 @@
 import React from 'react';
 import ThirtySeven from '../CommonUtils/ThirtySeven.js';
 import { Nav, NavItem, NavLink } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 import './index.css';
 import Map from '../Map';
+import Tooltip from '../Tooltip';
 
 class App extends React.Component {
     
@@ -11,9 +13,15 @@ class App extends React.Component {
         super(props);
         this.state = {
             maps: null,
-            focusTabIndex: 0
+            focusTabIndex: 0,
+            tooltip: {
+              tooltipMsg: null,
+              tooltipFadeOut: true,
+              tooltipType: 'info'
+            }
         };
         this.navOnClick = this.navOnClick.bind(this);
+        this.showTooltip = this.showTooltip.bind(this);
     }
 
     componentWillMount() {
@@ -36,10 +44,30 @@ class App extends React.Component {
         });
     }
 
+    getChildContext() {
+      return {
+        toolTip: this.showTooltip
+      };
+    }
+
+    showTooltip(type, message, fadeOut) {
+      this.setState({
+        tooltip: {
+          tooltipMsg: message,
+          tooltipFadeOut: fadeOut,
+          tooltipType: type
+        }
+      });
+    }
+
     render() {
-        if(this.state.maps) {
-            return (
-              <div>
+        return (
+          <div>
+            <div>
+              <Tooltip type={this.state.tooltip.tooltipType} message={this.state.tooltip.tooltipMsg} fadeOut={this.state.tooltip.tooltipFadeOut} />
+            </div>
+            <div>
+              { this.state.maps ? (
                 <div className="mt-3">
                   <Nav tabs>
                     {this.state.maps.map((_map, index) => 
@@ -53,15 +81,19 @@ class App extends React.Component {
                       </NavItem>
                     )}
                   </Nav>
-                </div>
-                <div>
                   <Map map={this.state.maps[this.state.focusTabIndex]} />
                 </div>
-              </div>
-            );
-        }
-        return null;
+              ) : (
+                null
+              )}
+            </div>
+          </div>
+        );
     }
 }
+
+App.childContextTypes = {
+  toolTip: PropTypes.func
+};
 
 export default App;

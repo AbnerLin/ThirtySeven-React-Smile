@@ -31,7 +31,7 @@ class MainPage extends React.Component {
     render() {
         if (!this.state.loading) {
             return (
-              <div>
+              <div id="main">
                 <Header title={Config.Title} subTitle={Config.SubTitle} />
                 <App />
                 <Footer copyright={Config.Copyright} />
