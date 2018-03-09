@@ -17,17 +17,17 @@ class Tooltip extends React.Component {
   componentDidUpdate(prevProps) {
   	if(this.props.message !== prevProps.message) {
   	  if(this.props.message) {
-	    this.setState({
-	    	visible: true
-	    }, () => {
-	    
-	    if (this.props.fadeOut) {
-	      setTimeout(() => {
-	        this.onDismiss();
-	      }, 5000);
+	      this.setState({
+	      	visible: true
+	      }, () => {
+	      
+	      if (this.props.fadeOut) {
+	        setTimeout(() => {
+	          this.onDismiss();
+	        }, 5000);
+	      }
+	      });
 	    }
-	    });
-	  }
   	}
   }
 
