@@ -1,6 +1,9 @@
 import React from 'react';
 import ThirtySeven from '../CommonUtils/ThirtySeven.js';
-import Furnish from './Furnish'
+import Furnish from './Furnish';
+import Stage from '../Stage';
+import Tooltip from '../Stage/Tooltip';
+
 import _ from 'lodash';
 import './index.css';
 
@@ -12,11 +15,15 @@ class Map extends React.Component {
     this.state = {
       style: null,
       mapInfo: null,
-      control: false
+      control: false,
+      tooltip: {
+        show: false,
+      }
     };
 
     this.onKeyDown = this.onKeyDown.bind(this);
     this.furnishOnDeleted = this.furnishOnDeleted.bind(this);
+    this.onDismissTooltip = this.onDismissTooltip.bind(this);
   }
 
   getMapInfo() {
@@ -45,7 +52,16 @@ class Map extends React.Component {
       _.remove(prevState.mapInfo.furnishList, (furnish) => {
         return furnish.furnishid === furnishId;
       });
-      return ({ mapInfo: prevState.mapInfo });
+
+      return ({ 
+        mapInfo: prevState.mapInfo,
+        tooltip: {
+          show: true,
+          type: 'success',
+          msg: 'furnish ' + furnishId + ' deleted!',
+          fadeOut: true
+        }
+       });
     });
   }
 
@@ -58,6 +74,14 @@ class Map extends React.Component {
     if (prevProps.map !== this.props.map) {
       this.getMapInfo();
     }
+  }
+
+  onDismissTooltip() {
+    this.setState({
+      tooltip: {
+        show: false
+      }
+    });
   }
 
   render() {
@@ -78,10 +102,22 @@ class Map extends React.Component {
       return items;
     };
 
+    const tooltip = this.state.tooltip.show ? (
+      <Stage>
+        <Tooltip  type={this.state.tooltip.type} 
+                  message={this.state.tooltip.msg} 
+                  fadeOut={this.state.tooltip.fadeOut} 
+                  onDismiss={this.onDismissTooltip} />
+      </Stage>
+    ) : null;
+
     return (
-      <div className="mapContainer">
-        <div className="map" style={this.state.style}>
-          <FurnishList />
+      <div>
+        {tooltip}
+        <div className="mapContainer">
+          <div className="map" style={this.state.style}>
+            <FurnishList />
+          </div>
         </div>
       </div>
     );

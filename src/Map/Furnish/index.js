@@ -3,7 +3,7 @@ import Draggable from 'react-draggable';
 import ToolBar from '../ToolBar';
 import './index.css';
 import ThirtySeven from '../../CommonUtils/ThirtySeven.js';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 
 class Furnish extends React.Component {
@@ -18,7 +18,6 @@ class Furnish extends React.Component {
 
   furnishOnClick(furnishId) {
     console.log(furnishId + ' on click!'); //TODO
-    this.context.toolTip('info', furnishId, true);
   }
 
   furnishOnDelete(furnishId) {
@@ -28,7 +27,7 @@ class Furnish extends React.Component {
         this.props.furnishOnDeleted(furnishId);
       } else {
         console.log(result._msg);
-        //TODO popup alert.
+        //TODO dialog ??.
       }
     });
   }
@@ -62,9 +61,5 @@ class Furnish extends React.Component {
      );
   }
 }
-
-Furnish.contextTypes = {
-  toolTip: PropTypes.func
-};
 
 export default Furnish;

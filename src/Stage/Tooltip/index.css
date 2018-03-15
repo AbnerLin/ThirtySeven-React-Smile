@@ -1,9 +1,9 @@
 .message {
 	max-width: 30%;
 	margin: auto;
-	position: absolute;
+	position: fixed;
 	bottom: 5%;
-	right: 5%;
+	right: 3%;
 	z-index: 1000;
 	color: black;
 }
