@@ -7,43 +7,42 @@ import Map from '../Map';
 class App extends React.Component {
     
   constructor(props) {
-      super(props);
-      this.state = {
-          maps: null,
-          focusTabIndex: 0,
-          tooltip: {
-            tooltipMsg: null,
-            tooltipFadeOut: true,
-            tooltipType: 'info'
-          }
-      };
-      this.navOnClick = this.navOnClick.bind(this);
+    super(props);
+    this.state = {
+        maps: null,
+        focusTabIndex: 0,
+        tooltip: {
+          tooltipMsg: null,
+          tooltipFadeOut: true,
+          tooltipType: 'info'
+        }
+    };
+    this.navOnClick = this.navOnClick.bind(this);
   }
 
   componentWillMount() {
-      ThirtySeven.ajax.get('customer').then(res => {
-          // this.setState({
-          //     diningCustomer: res._data
-          // });
-          console.log(res._data);
-      });
-      ThirtySeven.ajax.get('map').then(res => {
-          this.setState({
-              maps: res._data
-          });
-      });
+    ThirtySeven.ajax.get('customer').then(res => {
+        // this.setState({
+        //     diningCustomer: res._data
+        // });
+        console.log(res._data);
+    });
+    ThirtySeven.ajax.get('map').then(res => {
+        this.setState({
+            maps: res._data
+        });
+    });
   }
 
   navOnClick(index, mapId) {
-      this.setState({
-          focusTabIndex: index
-      });
+    this.setState({
+        focusTabIndex: index
+    });
   }
 
   render() {
     return (
       <div>
-        <div id="stage"></div>
         <div>
           { this.state.maps ? (
             <div className="mt-3">
