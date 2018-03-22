@@ -17,7 +17,7 @@ class LoginForm extends React.Component {
         password: '',
         btnDisabled: true,
         errorMsg: null,
-        force: this.props.force
+        force: this.props.force // force login, the modal will not dismiss if true.
     }
 
     this.toggle = this.toggle.bind(this);

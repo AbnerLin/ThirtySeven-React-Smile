@@ -21,13 +21,15 @@ class Furnish extends React.Component {
   }
 
   furnishOnDelete(furnishId) {
+    //TODO dialog.
+
     ThirtySeven.ajax.delete('map/furnish/' + furnishId).then(result => {
       console.log(result);
       if(result._status) {
         this.props.furnishOnDeleted(furnishId);
       } else {
         console.log(result._msg);
-        //TODO dialog ??.
+        //TODO tooltip ..
       }
     });
   }
