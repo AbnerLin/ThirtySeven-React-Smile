@@ -21,17 +21,28 @@ class Furnish extends React.Component {
   }
 
   furnishOnDelete(furnishId) {
-    //TODO dialog.
+    const deleteApi = () => {
+      ThirtySeven.ajax.delete('map/furnish/' + furnishId).then(result => {
+        if(result._status) {
+          this.props.furnishOnDeleted(furnishId);
+        } else {
+          this.props.tooltip('danger', result._msg, true);
+        }
+      });
+    };
 
-    ThirtySeven.ajax.delete('map/furnish/' + furnishId).then(result => {
-      console.log(result);
-      if(result._status) {
-        this.props.furnishOnDeleted(furnishId);
-      } else {
-        console.log(result._msg);
-        //TODO tooltip ..
+    this.props.furnishDeleteDialog(
+      'Note', // title
+      'Are you sure to delete?', // content
+      true, // yesOrNo
+      () => { // confirm 
+        deleteApi();
+        return true;
+      },
+      () => { // cancel 
+        return false;
       }
-    });
+    );
   }
 
   onDragStop(event, draggableData, furnish) {

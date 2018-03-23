@@ -5,7 +5,6 @@ import './index.css';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Form, Alert, InputGroup, InputGroupAddon } from 'reactstrap';
 
 import ThirtySeven from '../CommonUtils/ThirtySeven.js';
-import MainPage from '../index.js';
 
 class LoginForm extends React.Component {
 

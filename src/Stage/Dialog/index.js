@@ -1,30 +1,49 @@
 import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import './index.css';
 
-class Dialog extends React Component {
+class Dialog extends React.Component {
   
   constructor(props) {
     super(props);
 
     this.state = {
-      modalShow: false
+      modalShow: true
     };
 
     this.toggle = this.toggle.bind(this);
+    this.confirm = this.confirm.bind(this);
+    this.cancel = this.cancel.bind(this);
   }
 
   toggle() {
     this.setState({
       modalShow: !this.state.modalShow
+    }, () => {
+      this.props.toggle();
     });
+  }
+
+  confirm() {
+    this.props.confirm();
+    this.props.toggle();
+  }
+
+  cancel() {
+    this.props.cancel();
+    this.props.toggle();
   }
 
   render() {
     const buttonGroup = this.props.yesOrNo ? (
-      <Button color="success">ok</Button>
-      <Button color="secondary" onClick={this.toggle}>cancel</Button>
+      <div>
+        <Button color="success" onClick={this.confirm}>ok</Button>
+        <Button color="secondary" onClick={this.cancel}>cancel</Button>
+      </div>
     ) : (
-      <Button color="secondary" onClick={this.toggle}>cancel</Button>
+      <div>
+        <Button color="secondary" onClick={this.cancel}>cancel</Button>
+      </div>
     );
 
     return (
@@ -41,4 +60,4 @@ class Dialog extends React Component {
   }
 }
 
-export default Tooltip;
+export default Dialog;

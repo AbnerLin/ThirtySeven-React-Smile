@@ -3,6 +3,7 @@ import ThirtySeven from '../CommonUtils/ThirtySeven.js';
 import Furnish from './Furnish';
 import Stage from '../Stage';
 import Tooltip from '../Stage/Tooltip';
+import Dialog from '../Stage/Dialog';
 
 import _ from 'lodash';
 import './index.css';
@@ -18,12 +19,24 @@ class Map extends React.Component {
       control: false,
       tooltip: {
         show: false,
+      },
+      dialog: {
+        show: false,
+        title: '',
+        content: '',
+        yesOrNo: false,
+        operation: {
+          confirm: null,
+          cancel: null
+        }
       }
     };
 
     this.onKeyDown = this.onKeyDown.bind(this);
+    this.dialogShowUp = this.dialogShowUp.bind(this);
     this.furnishOnDeleted = this.furnishOnDeleted.bind(this);
     this.onDismissTooltip = this.onDismissTooltip.bind(this);
+    this.tooltipShowUp = this.tooltipShowUp.bind(this);
   }
 
   getMapInfo() {
@@ -47,6 +60,39 @@ class Map extends React.Component {
     }
   }
 
+  tooltipShowUp(type, msg, fadeOut) {
+    this.setState({
+      tooltip: {
+        show: true,
+        type: type,
+        msg: msg,
+        fadeOut: fadeOut
+      }
+    });
+  }
+
+  dialogShowUp(title, content, yesOrNo, confirm, cancel) {
+    this.setState({
+      dialog: {
+        show: true,
+        title: title, 
+        content: content,
+        yesOrNo: yesOrNo,
+        operation: {
+          confirm: confirm,
+          cancel: cancel
+        },
+        toggle: () => {
+          this.setState({
+            dialog: {
+              show: false
+            }
+          });
+        }
+      }
+    });
+  }
+
   furnishOnDeleted(furnishId) {
     this.setState((prevState, props) => {
       _.remove(prevState.mapInfo.furnishList, (furnish) => {
@@ -61,7 +107,7 @@ class Map extends React.Component {
           msg: 'furnish ' + furnishId + ' deleted!',
           fadeOut: true
         }
-       });
+      });
     });
   }
 
@@ -94,7 +140,9 @@ class Map extends React.Component {
           return <Furnish key={ item.furnishid } 
                           control={ this.state.control } 
                           furnish={ item }
+                          furnishDeleteDialog={ this.dialogShowUp   }
                           furnishOnDeleted={ this.furnishOnDeleted }
+                          tooltip={this.tooltipShowUp}
           />
         });
       }
@@ -111,9 +159,21 @@ class Map extends React.Component {
       </Stage>
     ) : null;
 
+    const dialog = this.state.dialog.show ? (
+      <Stage>
+        <Dialog title={this.state.dialog.title} 
+                content={this.state.dialog.content}
+                confirm={this.state.dialog.operation.confirm}
+                cancel={this.state.dialog.operation.cancel}
+                yesOrNo={this.state.dialog.yesOrNo} 
+                toggle={this.state.dialog.toggle} />
+      </Stage>
+    ) : null;
+
     return (
       <div>
         {tooltip}
+        {dialog}
         <div className="mapContainer">
           <div className="map" style={this.state.style}>
             <FurnishList />
