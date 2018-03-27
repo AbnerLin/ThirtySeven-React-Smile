@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import './index.css';
+import PropTypes from 'prop-types';
 
 class Dialog extends React.Component {
   
@@ -59,5 +60,14 @@ class Dialog extends React.Component {
     );
   }
 }
+
+Dialog.propTypes = {
+  title: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+  confirm: PropTypes.func,
+  cancel: PropTypes.func.isRequired,
+  yesOrNo: PropTypes.bool,
+  toggle: PropTypes.func.isRequired
+};
 
 export default Dialog;

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Form, Alert, InputGroup, InputGroupAddon } from 'reactstrap';
-
+import PropTypes from 'prop-types';
 import ThirtySeven from '../CommonUtils/ThirtySeven.js';
 
 class LoginForm extends React.Component {
@@ -130,5 +130,10 @@ class LoginForm extends React.Component {
     );
   }
 }
+
+LoginForm.propTypes = {
+  loginSucceed: PropTypes.func,
+  force: PropTypes.bool
+};
 
 export default LoginForm;

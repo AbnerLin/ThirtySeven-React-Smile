@@ -1,7 +1,7 @@
 import React from 'react';
 import { Alert } from 'reactstrap';
 import './index.css';
-
+import PropTypes from 'prop-types';
 
 class Tooltip extends React.Component {
 
@@ -33,5 +33,12 @@ class Tooltip extends React.Component {
     );
   }
 }
+
+Tooltip.propTypes = {
+  type: PropTypes.string.isRequired, // refs https://reactstrap.github.io/components/alerts/
+  message: PropTypes.string.isRequired,
+  fadeOut: PropTypes.bool,
+  onDismiss: PropTypes.func
+};
 
 export default Tooltip;
