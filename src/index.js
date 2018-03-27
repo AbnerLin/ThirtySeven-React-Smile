@@ -26,7 +26,11 @@ class MainPage extends React.Component {
       if (res && res._status === true) {
         this.loginSucceed();
       } else {
-        ReactDOM.render(<LoginForm loginSucceed={this.loginSucceed} force={true}  /> , document.getElementById('stage'));
+        ReactDOM.render(
+          <LoginForm loginSucceed={this.loginSucceed} 
+                     force={true}  />, 
+          document.getElementById('stage')
+        );
       }
     });
   }
