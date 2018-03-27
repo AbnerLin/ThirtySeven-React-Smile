@@ -1,5 +1,5 @@
 import React from 'react';
-import ThirtySeven from '../CommonUtils/ThirtySeven.js';
+import ThirtySeven from '../../common-utils/ThirtySeven.js';
 import { Nav, NavItem, NavLink } from 'reactstrap';
 import './index.css';
 import Map from '../Map';

@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom';
 
 import './index.css';
 
-import App from './App';
-import Header from './Header';
-import Footer from './Footer';
-import LoginForm from './LoginForm';
-import ThirtySeven from './CommonUtils/ThirtySeven.js';
+import App from './compoments/App';
+import Header from './compoments/Header';
+import Footer from './compoments/Footer';
+import LoginForm from './compoments/LoginForm';
+import ThirtySeven from './common-utils/ThirtySeven.js';
 import Config from './config.json';
 
 class MainPage extends React.Component {

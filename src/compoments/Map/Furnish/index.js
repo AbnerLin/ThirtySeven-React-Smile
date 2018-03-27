@@ -2,9 +2,7 @@ import React from 'react';
 import Draggable from 'react-draggable';
 import ToolBar from '../ToolBar';
 import './index.css';
-import ThirtySeven from '../../CommonUtils/ThirtySeven.js';
-// import PropTypes from 'prop-types';
-
+import ThirtySeven from '../../../common-utils/ThirtySeven.js';
 
 class Furnish extends React.Component {
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import ThirtySeven from '../CommonUtils/ThirtySeven.js';
+import ThirtySeven from '../../common-utils/ThirtySeven.js';
 import Furnish from './Furnish';
 import Stage from '../Stage';
 import Tooltip from '../Stage/Tooltip';
