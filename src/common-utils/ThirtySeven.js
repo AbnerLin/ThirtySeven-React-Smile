@@ -1,8 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createStore } from 'redux'
+import rootReducer from '../reducers'
 import LoginForm from '../compoments/LoginForm';
 
 const axios = require('axios');
+export const store = createStore(rootReducer);
 
 class ThirtySeven {
 

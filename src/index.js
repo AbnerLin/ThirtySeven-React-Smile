@@ -1,19 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-import rootReducer from './reducers'
 import { setAuth } from './actions'
 import ThirtySeven from './common-utils/ThirtySeven';
-
+import { store } from './common-utils/ThirtySeven';
 import './index.css';
 import App from './compoments/App';
 import Header from './compoments/Header';
 import Footer from './compoments/Footer';
 import LoginForm from './compoments/LoginForm';
 import Config from './config.json';
-
-const store = createStore(rootReducer);
 
 class MainPage extends React.Component {
 
@@ -30,14 +26,15 @@ class MainPage extends React.Component {
     /** Get user info. */
     ThirtySeven.ajax.get('auth').then(res => {
       if (res && res._status === true) {
+        console.log(res);
         store.dispatch(setAuth(res._data));
       }
 
       console.log(store.getState());
 
-      setInterval(() => {
-        console.log(store.getState());
-      }, 2000);
+      // setInterval(() => {
+      //   console.log(store.getState());
+      // }, 2000);
     });
 
     // ThirtySeven.ajax.get('auth').then(res => {

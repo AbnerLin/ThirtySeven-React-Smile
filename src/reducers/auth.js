@@ -10,14 +10,16 @@ const initialState = {
 const auth = (state = initialState, action) => {
   switch (action.type) {
     case SET_AUTH:
-      return {
+      // return {
+      //   isLogin: true,
+      //   userInfo: action.userInfo
+      // };
+      return Object.assign({}, {
         isLogin: true,
         userInfo: action.userInfo
-      };
+      });
     case DESTROY_AUTH:
-      return {
-        isLogin: false
-      };
+      return initialState;
     default:
       return state;
   }

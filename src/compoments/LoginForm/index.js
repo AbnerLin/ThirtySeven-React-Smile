@@ -30,11 +30,7 @@ class LoginForm extends React.Component {
     console.log(this.props.isLogin);
     console.log('!');
 
-    // setTimeout(() => {
-    //   console.log(this.props.isLogin);
-    // }, 5000);
-
-    setInterval(() => {
+    setTimeout(() => {
       console.log(this.props.isLogin);
     }, 2000);
   }
@@ -84,7 +80,6 @@ class LoginForm extends React.Component {
         //   this.props.loginSucceed();
         // }
         this.props.loginSucceed(res._data);
-
         this.toggle(true);
       }
     });
