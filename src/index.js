@@ -1,14 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import rootReducer from './reducers'
+import { setAuth } from './actions'
+import ThirtySeven from './common-utils/ThirtySeven';
 
 import './index.css';
-
 import App from './compoments/App';
 import Header from './compoments/Header';
 import Footer from './compoments/Footer';
 import LoginForm from './compoments/LoginForm';
-import ThirtySeven from './common-utils/ThirtySeven.js';
 import Config from './config.json';
+
+const store = createStore(rootReducer);
 
 class MainPage extends React.Component {
 
@@ -22,17 +27,30 @@ class MainPage extends React.Component {
   }
 
   componentDidMount() {
+    /** Get user info. */
     ThirtySeven.ajax.get('auth').then(res => {
       if (res && res._status === true) {
-        this.loginSucceed();
-      } else {
-        ReactDOM.render(
-          <LoginForm loginSucceed={this.loginSucceed} 
-                     force={true}  />, 
-          document.getElementById('stage')
-        );
+        store.dispatch(setAuth(res._data));
       }
+
+      console.log(store.getState());
+
+      setInterval(() => {
+        console.log(store.getState());
+      }, 2000);
     });
+
+    // ThirtySeven.ajax.get('auth').then(res => {
+    //   if (res && res._status === true) {
+    //     this.loginSucceed();
+    //   } else {
+    //     ReactDOM.render(
+    //       <LoginForm loginSucceed={this.loginSucceed} 
+    //                  force={true}  />, 
+    //       document.getElementById('stage')
+    //     );
+    //   }
+    // });
   }
 
   loginSucceed() {
@@ -51,12 +69,15 @@ class MainPage extends React.Component {
     ) : null;  
 
     return (
-      <div id="main">
-        <div id="stage"></div>
-        <Header title={Config.Title} subTitle={Config.SubTitle} />
-        {content}
-        <Footer copyright={Config.Copyright} />
-      </div>
+      <Provider store={store}>
+        <div>
+          <div id="stage"></div>
+          <LoginForm />
+          <Header title={Config.Title} subTitle={Config.SubTitle} />
+          {content}
+          <Footer copyright={Config.Copyright} />
+        </div>
+      </Provider>
     );
   }
 }

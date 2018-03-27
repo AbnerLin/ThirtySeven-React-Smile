@@ -5,13 +5,15 @@ import './index.css';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Form, Alert, InputGroup, InputGroupAddon } from 'reactstrap';
 import PropTypes from 'prop-types';
 import ThirtySeven from '../../common-utils/ThirtySeven.js';
+import { setAuth } from '../../actions';
+import { connect } from 'react-redux';
 
 class LoginForm extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-        modalShow: true,
+        modalShow: !this.props.isLogin,
         account: '',
         password: '',
         btnDisabled: true,
@@ -22,6 +24,19 @@ class LoginForm extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.login = this.login.bind(this);
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    console.log(this.props.isLogin);
+    console.log('!');
+
+    // setTimeout(() => {
+    //   console.log(this.props.isLogin);
+    // }, 5000);
+
+    setInterval(() => {
+      console.log(this.props.isLogin);
+    }, 2000);
   }
 
   toggle(loginSucceed) {
@@ -65,9 +80,10 @@ class LoginForm extends React.Component {
             errorMsg: res._msg
         });
       } else {
-        if(this.props.loginSucceed) {
-          this.props.loginSucceed();
-        }
+        // if(this.props.loginSucceed) {
+        //   this.props.loginSucceed();
+        // }
+        this.props.loginSucceed(res._data);
 
         this.toggle(true);
       }
@@ -136,4 +152,23 @@ LoginForm.propTypes = {
   force: PropTypes.bool
 };
 
-export default LoginForm;
+
+const mapStateToProps = state => {
+  return {
+    isLogin: state.auth.isLogin
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    loginSucceed: userInfo => {
+      dispatch(setAuth(userInfo));
+    }
+  };
+};
+
+// export default LoginForm;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LoginForm);
