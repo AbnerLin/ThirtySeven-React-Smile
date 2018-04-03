@@ -1,24 +1,25 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import 'bootstrap/dist/css/bootstrap.css';
-import './index.css';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Form, Alert, InputGroup, InputGroupAddon } from 'reactstrap';
-import PropTypes from 'prop-types';
 import ThirtySeven from '../../common-utils/ThirtySeven.js';
+import PropTypes from 'prop-types';
+
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Form, Alert, InputGroup, InputGroupAddon } from 'reactstrap';
 import { setAuth } from '../../actions';
 import { connect } from 'react-redux';
+
+import 'bootstrap/dist/css/bootstrap.css';
+import './index.css';
 
 class LoginForm extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-        modalShow: !this.props.isLogin,
-        account: '',
-        password: '',
-        btnDisabled: true,
-        errorMsg: null,
-        force: this.props.force // force login, the modal will not dismiss if true.
+      modalShow: !this.props.isLogin,
+      account: '',
+      password: '',
+      btnDisabled: true,
+      errorMsg: null,
+      force: this.props.force // force login, the modal will not dismiss if true.
     }
 
     this.toggle = this.toggle.bind(this);
@@ -26,25 +27,20 @@ class LoginForm extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  componentDidMount() {
-    console.log(this.props.isLogin);
-    console.log('!');
-
-    setTimeout(() => {
-      console.log(this.props.isLogin);
-    }, 2000);
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      modalShow: !nextProps.isLogin
+    });
   }
 
-  toggle(loginSucceed) {
-    if(!this.state.force || loginSucceed) {
-      this.setState({
-        modalShow: !this.state.modalShow
-      }, () => {
-        ReactDOM.unmountComponentAtNode(document.getElementById('stage'));
+  toggle() {
+    if (this.state.force) {
+       this.setState({
+        errorMsg: 'Must login first.'
       });
     } else {
       this.setState({
-        errorMsg: 'Must login first.'
+        modalShow: !this.state.modalShow
       });
     }
   }
@@ -76,11 +72,12 @@ class LoginForm extends React.Component {
             errorMsg: res._msg
         });
       } else {
-        // if(this.props.loginSucceed) {
-        //   this.props.loginSucceed();
-        // }
         this.props.loginSucceed(res._data);
-        this.toggle(true);
+        this.setState({
+          account: '',
+          password: '',
+          errorMsg: null
+        });
       }
     });
   }
@@ -162,7 +159,6 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-// export default LoginForm;
 export default connect(
   mapStateToProps,
   mapDispatchToProps

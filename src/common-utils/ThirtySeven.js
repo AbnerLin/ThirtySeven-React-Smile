@@ -1,10 +1,8 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { createStore } from 'redux'
 import rootReducer from '../reducers'
-import LoginForm from '../compoments/LoginForm';
+import axios from 'axios';
+import { createStore } from 'redux'
+import { destroyAuth } from '../actions'
 
-const axios = require('axios');
 export const store = createStore(rootReducer);
 
 class ThirtySeven {
@@ -24,19 +22,14 @@ class ThirtySeven {
       timeout: 3000
     });
 
-    this._axios.interceptors.response.use(res => {
-        return res.data;
-    });
-  }
-
-  attachAuthChecker() {
     this._axios.interceptors.response.use((res) => {
-      if (res._code === '0200') {
-        return res;
-      } else {
-        ReactDOM.render(<LoginForm /> , document.getElementById('stage'));
-        return Promise.reject('Permission denied.');
-      }
+      if (res.data._code === '0040') {
+        // invalid authorization 
+        store.dispatch(destroyAuth());
+        return Promise.reject(res._msg);
+      } 
+      return res.data;
+      
     }, (err) => {
       return Promise.reject(err);
     });
