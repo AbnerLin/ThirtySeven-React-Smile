@@ -10,8 +10,10 @@
     "react-dom": "^16.2.0",
     "react-draggable": "^3.0.5",
     "react-icons": "^2.2.7",
+    "react-redux": "^5.0.7",
     "react-scripts": "1.1.0",
-    "reactstrap": "^5.0.0-beta"
+    "reactstrap": "^5.0.0-beta",
+    "redux": "^4.0.0"
   },
   "scripts": {
     "start": "SET PORT=3001 && react-scripts start",
