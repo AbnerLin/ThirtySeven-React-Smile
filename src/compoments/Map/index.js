@@ -1,10 +1,6 @@
 import React from 'react';
 import ThirtySeven from '../../common-utils/ThirtySeven.js';
 import Furnish from './Furnish';
-// import Stage from '../Stage';
-// import Tooltip from '../Stage/Tooltip';
-// import Dialog from '../Stage/Dialog';
-
 import _ from 'lodash';
 import './index.css';
 
@@ -77,9 +73,7 @@ class Map extends React.Component {
           return <Furnish key={ item.furnishid }
                           control={ this.state.control }
                           furnish={ item }
-                          furnishDeleteDialog={ this.dialogShowUp   }
                           furnishOnDeleted={ this.furnishOnDeleted }
-                          tooltip={this.tooltipShowUp}
           />
         });
       }
