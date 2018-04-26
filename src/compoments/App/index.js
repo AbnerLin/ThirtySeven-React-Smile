@@ -1,14 +1,14 @@
 import React from 'react';
 import ThirtySeven from '../../common-utils/ThirtySeven.js';
 import { connect } from 'react-redux';
-
 import { Nav, NavItem, NavLink } from 'reactstrap';
 import Map from '../Map';
+import { Customer } from '../../actions/creators';
 
 import './index.css';
 
 class App extends React.Component {
-    
+
   constructor(props) {
     super(props);
     this.state = {
@@ -18,13 +18,18 @@ class App extends React.Component {
     this.navOnClick = this.navOnClick.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
+  async componentWillReceiveProps(nextProps) {
     if(nextProps.isLogin) {
       // fecth map data from server.
-      ThirtySeven.ajax.get('map').then(res => {
+      await ThirtySeven.ajax.get('map').then(res => {
         this.setState({
             maps: res._data
         });
+      });
+
+      // fetch customer data from server.
+      await ThirtySeven.ajax.get('customer').then(res => {
+        this.props.initCustomerInfo(res._data);
       });
     }
   }
@@ -41,11 +46,11 @@ class App extends React.Component {
         { this.state.maps ? (
           <div className="mt-3">
             <Nav tabs>
-              {this.state.maps.map((_map, index) => 
+              {this.state.maps.map((_map, index) =>
                 <NavItem key={_map.mapid}>
-                  <NavLink 
-                    href="#" 
-                    active={index === this.state.focusTabIndex} 
+                  <NavLink
+                    href="#"
+                    active={index === this.state.focusTabIndex}
                     onClick={() => this.navOnClick(index, _map.mapid)}>
                         {_map.name}
                   </NavLink>
@@ -69,7 +74,11 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    initCustomerInfo: customerInfo => {
+      dispatch(Customer.init(customerInfo));
+    }
+  };
 };
 
 export default connect(

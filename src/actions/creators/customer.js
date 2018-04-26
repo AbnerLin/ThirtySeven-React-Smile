@@ -1,4 +1,4 @@
-import { CUSTOMER } form '../index';
+import { CUSTOMER } from '../index';
 
 class Customer {
 
