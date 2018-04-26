@@ -36,7 +36,6 @@ class MainPage extends React.Component {
     return (
       <Provider store={store}>
         <div>
-          <div id="stage"></div>
           <LoginForm force={false} />
           <Header title={Config.Title} subTitle={Config.SubTitle} />
           <App />

@@ -3,6 +3,7 @@ import Draggable from 'react-draggable';
 import ToolBar from '../ToolBar';
 import './index.css';
 import ThirtySeven from '../../../common-utils/ThirtySeven.js';
+import alertify from 'alertify.js';
 
 class Furnish extends React.Component {
 
@@ -16,31 +17,29 @@ class Furnish extends React.Component {
 
   furnishOnClick(furnishId) {
     console.log(furnishId + ' on click!'); //TODO
+    alertify.success(furnishId + ' on click!');
   }
 
   furnishOnDelete(furnishId) {
+    alertify
+      .okBtn('Yes')
+      .cancelBtn('No')
+      .confirm('Are you sure to delete?', () => {
+        deleteApi();
+      }, () => {
+        // pass
+      });
+
     const deleteApi = () => {
       ThirtySeven.ajax.delete('map/furnish/' + furnishId).then(result => {
         if(result._status) {
           this.props.furnishOnDeleted(furnishId);
+          alertify.logPosition('bottom right').success('delete success.')
         } else {
-          this.props.tooltip('danger', result._msg, true);
+          alertify.logPosition('bottom right').error(result._msg);
         }
       });
     };
-
-    this.props.furnishDeleteDialog(
-      'Note', // title
-      'Are you sure to delete?', // content
-      true, // yesOrNo
-      () => { // confirm 
-        deleteApi();
-        return true;
-      },
-      () => { // cancel 
-        return false;
-      }
-    );
   }
 
   onDragStop(event, draggableData, furnish) {

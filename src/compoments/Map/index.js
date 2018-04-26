@@ -1,9 +1,9 @@
 import React from 'react';
 import ThirtySeven from '../../common-utils/ThirtySeven.js';
 import Furnish from './Furnish';
-import Stage from '../Stage';
-import Tooltip from '../Stage/Tooltip';
-import Dialog from '../Stage/Dialog';
+// import Stage from '../Stage';
+// import Tooltip from '../Stage/Tooltip';
+// import Dialog from '../Stage/Dialog';
 
 import _ from 'lodash';
 import './index.css';
@@ -16,27 +16,11 @@ class Map extends React.Component {
     this.state = {
       style: null,
       mapInfo: null,
-      control: false,
-      tooltip: {
-        show: false,
-      },
-      dialog: {
-        show: false,
-        title: '',
-        content: '',
-        yesOrNo: false,
-        operation: {
-          confirm: null,
-          cancel: null
-        }
-      }
+      control: false
     };
 
     this.onKeyDown = this.onKeyDown.bind(this);
-    this.dialogShowUp = this.dialogShowUp.bind(this);
     this.furnishOnDeleted = this.furnishOnDeleted.bind(this);
-    this.onDismissTooltip = this.onDismissTooltip.bind(this);
-    this.tooltipShowUp = this.tooltipShowUp.bind(this);
   }
 
   getMapInfo() {
@@ -60,53 +44,14 @@ class Map extends React.Component {
     }
   }
 
-  tooltipShowUp(type, msg, fadeOut) {
-    this.setState({
-      tooltip: {
-        show: true,
-        type: type,
-        msg: msg,
-        fadeOut: fadeOut
-      }
-    });
-  }
-
-  dialogShowUp(title, content, yesOrNo, confirm, cancel) {
-    this.setState({
-      dialog: {
-        show: true,
-        title: title, 
-        content: content,
-        yesOrNo: yesOrNo,
-        operation: {
-          confirm: confirm,
-          cancel: cancel
-        },
-        toggle: () => {
-          this.setState({
-            dialog: {
-              show: false
-            }
-          });
-        }
-      }
-    });
-  }
-
   furnishOnDeleted(furnishId) {
     this.setState((prevState, props) => {
       _.remove(prevState.mapInfo.furnishList, (furnish) => {
         return furnish.furnishid === furnishId;
       });
 
-      return ({ 
-        mapInfo: prevState.mapInfo,
-        tooltip: {
-          show: true,
-          type: 'success',
-          msg: 'furnish ' + furnishId + ' deleted!',
-          fadeOut: true
-        }
+      return ({
+        mapInfo: prevState.mapInfo
       });
     });
   }
@@ -122,14 +67,6 @@ class Map extends React.Component {
     }
   }
 
-  onDismissTooltip() {
-    this.setState({
-      tooltip: {
-        show: false
-      }
-    });
-  }
-
   render() {
     const FurnishList = () => {
       const itemList = this.state.mapInfo ? this.state.mapInfo.furnishList : null;
@@ -137,8 +74,8 @@ class Map extends React.Component {
 
       if (itemList) {
         items = itemList.map((item) => {
-          return <Furnish key={ item.furnishid } 
-                          control={ this.state.control } 
+          return <Furnish key={ item.furnishid }
+                          control={ this.state.control }
                           furnish={ item }
                           furnishDeleteDialog={ this.dialogShowUp   }
                           furnishOnDeleted={ this.furnishOnDeleted }
@@ -150,30 +87,8 @@ class Map extends React.Component {
       return items;
     };
 
-    const tooltip = this.state.tooltip.show ? (
-      <Stage>
-        <Tooltip  type={this.state.tooltip.type} 
-                  message={this.state.tooltip.msg} 
-                  fadeOut={this.state.tooltip.fadeOut} 
-                  onDismiss={this.onDismissTooltip} />
-      </Stage>
-    ) : null;
-
-    const dialog = this.state.dialog.show ? (
-      <Stage>
-        <Dialog title={this.state.dialog.title} 
-                content={this.state.dialog.content}
-                confirm={this.state.dialog.operation.confirm}
-                cancel={this.state.dialog.operation.cancel}
-                yesOrNo={this.state.dialog.yesOrNo} 
-                toggle={this.state.dialog.toggle} />
-      </Stage>
-    ) : null;
-
     return (
       <div>
-        {tooltip}
-        {dialog}
         <div className="mapContainer">
           <div className="map" style={this.state.style}>
             <FurnishList />
