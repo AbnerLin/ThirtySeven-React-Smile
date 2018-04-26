@@ -1,7 +1,7 @@
 import rootReducer from '../reducers'
 import axios from 'axios';
 import { createStore } from 'redux'
-import { destroyAuth } from '../actions'
+import { Auth, Window } from '../actions/creators'
 
 export const store = createStore(rootReducer);
 
@@ -24,12 +24,13 @@ class ThirtySeven {
 
     this._axios.interceptors.response.use((res) => {
       if (res.data._code === '0040') {
-        // invalid authorization 
-        store.dispatch(destroyAuth());
+        // invalid authorization
+        store.dispatch(Auth.destroyAuth());
+        store.dispatch(Window.login.showModal());
         return Promise.reject(res._msg);
-      } 
+      }
       return res.data;
-      
+
     }, (err) => {
       return Promise.reject(err);
     });

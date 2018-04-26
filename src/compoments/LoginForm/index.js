@@ -3,7 +3,7 @@ import ThirtySeven from '../../common-utils/ThirtySeven.js';
 import PropTypes from 'prop-types';
 
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Form, Alert, InputGroup, InputGroupAddon } from 'reactstrap';
-import { setAuth } from '../../actions';
+import { Auth, Window } from '../../actions/creators';
 import { connect } from 'react-redux';
 
 import 'bootstrap/dist/css/bootstrap.css';
@@ -14,12 +14,12 @@ class LoginForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalShow: !this.props.isLogin,
+      force: this.props.force, // force login, the modal will not dismiss if true.
+      modalShow: this.props.modalShow,
       account: '',
       password: '',
       btnDisabled: true,
-      errorMsg: null,
-      force: this.props.force // force login, the modal will not dismiss if true.
+      errorMsg: null
     }
 
     this.toggle = this.toggle.bind(this);
@@ -29,7 +29,7 @@ class LoginForm extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      modalShow: !nextProps.isLogin
+      modalShow: nextProps.modalShow
     });
   }
 
@@ -39,9 +39,7 @@ class LoginForm extends React.Component {
         errorMsg: 'Must login first.'
       });
     } else {
-      this.setState({
-        modalShow: !this.state.modalShow
-      });
+      this.props.hideModal();
     }
   }
 
@@ -98,20 +96,20 @@ class LoginForm extends React.Component {
                       <FormGroup className="mb-2 mr-sm-2 col-12">
                         <InputGroup>
                           <InputGroupAddon addonType="prepend">帳號</InputGroupAddon>
-                          <Input 
-                            type="text" 
-                            name="account" 
-                            value={this.state.account} 
+                          <Input
+                            type="text"
+                            name="account"
+                            value={this.state.account}
                             onChange={this.handleChange} />
                         </InputGroup>
                       </FormGroup>
                       <FormGroup className="mb-2 mr-sm-2 col-12">
                         <InputGroup>
                           <InputGroupAddon addonType="prepend">密碼</InputGroupAddon>
-                          <Input 
-                            type="password" 
-                            name="password" 
-                            value={this.state.password} 
+                          <Input
+                            type="password"
+                            name="password"
+                            value={this.state.password}
                             onChange={this.handleChange} />
                         </InputGroup>
                       </FormGroup>
@@ -126,11 +124,11 @@ class LoginForm extends React.Component {
               </div>
           </ModalBody>
           <ModalFooter>
-            <Button 
-              type="submit" 
-              form="LoginForm" 
-              color="primary" 
-              onClick={this.login} 
+            <Button
+              type="submit"
+              form="LoginForm"
+              color="primary"
+              onClick={this.login}
               disabled={this.state.btnDisabled}>登入</Button>
           </ModalFooter>
         </Modal>
@@ -147,14 +145,18 @@ LoginForm.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    isLogin: state.auth.isLogin
+    modalShow: state.window.loginForm
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     loginSucceed: userInfo => {
-      dispatch(setAuth(userInfo));
+      dispatch(Auth.setAuth(userInfo));
+      dispatch(Window.login.hideModal());
+    },
+    hideModal: () => {
+      dispatch(Window.login.hideModal());
     }
   };
 };

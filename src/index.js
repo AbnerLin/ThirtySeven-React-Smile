@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import ThirtySeven from './common-utils/ThirtySeven';
 import { Provider } from 'react-redux'
-import { setAuth } from './actions'
+import { Auth, Window } from './actions/creators'
 import { store } from './common-utils/ThirtySeven';
 
 import App from './compoments/App';
@@ -26,7 +26,8 @@ class MainPage extends React.Component {
     /** Get user info. */
     ThirtySeven.ajax.get('auth').then(res => {
       if (res && res._status === true) {
-        store.dispatch(setAuth(res._data));
+        store.dispatch(Auth.setAuth(res._data));
+        store.dispatch(Window.login.hideModal());
       }
     });
   }
@@ -36,7 +37,7 @@ class MainPage extends React.Component {
       <Provider store={store}>
         <div>
           <div id="stage"></div>
-          <LoginForm force={true} />
+          <LoginForm force={false} />
           <Header title={Config.Title} subTitle={Config.SubTitle} />
           <App />
           <Footer copyright={Config.Copyright} />
