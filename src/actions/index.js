@@ -4,9 +4,17 @@
 /** App level actions */
 export const RESET = 'RESET'; // Refetch all data from server.
 
+/** Auth actions */
 export const AUTH = {
   SET: 'SET',
   DESTROY: 'DESTROY'
+};
+
+/** Customer actions */
+export const CUSTOMER = {
+  INIT: 'INIT',
+  CHECKIN: 'CHECKIN',
+  CHECKOUT: 'CHECKOUT'
 };
 
 /** Windows actions */
@@ -21,10 +29,6 @@ export const WINDOW = {
 export const ADD_FURNISH = 'ADD_FURNISH';
 export const DELETE_FURNISH = 'DELETE_FURNISH';
 export const MODIFY_FURNISH = 'MODIFY_FURNISH';
-
-/** Customer actions */
-export const CHECKIN = 'CHECKIN';
-export const CHECKOUT = 'CHECKOUT';
 
 /** Order actions */
 export const SEND_ORDER = 'SEND_ORDER';
