@@ -1,5 +1,6 @@
 import React from 'react';
 import ThirtySeven from '../../common-utils/ThirtySeven.js';
+import { connect } from 'react-redux';
 import Furnish from './Furnish';
 import _ from 'lodash';
 import './index.css';
@@ -70,10 +71,15 @@ class Map extends React.Component {
 
       if (itemList) {
         items = itemList.map((item) => {
+          var inUse = _.find(this.props.customerInfo, (o) => {
+            return o.furnish === item.furnishid;
+          });
+
           return <Furnish key={ item.furnishid }
                           control={ this.state.control }
                           furnish={ item }
                           furnishOnDeleted={ this.furnishOnDeleted }
+                          inUse={ inUse ? true : false }
           />
         });
       }
@@ -93,4 +99,17 @@ class Map extends React.Component {
   }
 }
 
-export default Map;
+const mapStateToProps = state => {
+  return {
+    customerInfo: state.customer.customerInfo
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {};
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Map);

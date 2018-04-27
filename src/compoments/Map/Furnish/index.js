@@ -1,6 +1,5 @@
 import React from 'react';
 import Draggable from 'react-draggable';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ToolBar from '../ToolBar';
 import './index.css';
@@ -17,16 +16,13 @@ class Furnish extends React.Component {
     this.furnishOnDelete = this.furnishOnDelete.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps.customerInfo);
-    // TODO
-  }
-
   furnishOnClick() {
-    console.log(this.props.furnish.furnishId + ' on click!'); //TODO
-    alertify.success(this.props.furnish.furnishid + ' on click!');
-    alertify.success(this.props.furnish.name + ' on click!!!');
-    console.log(this.props.customerInfo);
+    // TODO
+    // console.log(this.props.furnish.furnishId + ' on click!');
+    // alertify.success(this.props.furnish.furnishid + ' on click!');
+    // alertify.success(this.props.furnish.name + ' on click!!!');
+    // console.log(this.props.customerInfo);
+    console.log(this.props.inUse);
   }
 
   furnishOnDelete(furnishId) {
@@ -74,7 +70,7 @@ class Furnish extends React.Component {
         defaultPosition={{x: furnish.x, y: furnish.y}}>
         <div className="box">
           { this.props.control ? <ToolBar furnish={furnish} onDelete={this.furnishOnDelete} /> : null }
-          <div className="furnish d-flex justify-content-center align-items-center" onClick={this.furnishOnClick}>{furnish.name}</div>
+          <div className={"furnish d-flex justify-content-center align-items-center " + (this.props.inUse ? "furnish-inuse" : "furnish-empty") } onClick={this.furnishOnClick}>{furnish.name}</div>
         </div>
       </Draggable>
      );
@@ -85,20 +81,4 @@ Furnish.propTypes = {
   furnish: PropTypes.object
 };
 
-
-const mapStateToProps = state => {
-  return {
-    customerInfo: state.customer.customerInfo
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {};
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Furnish);
-
-// export default Furnish;
+export default Furnish;
