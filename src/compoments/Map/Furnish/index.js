@@ -1,7 +1,7 @@
 import React from 'react';
 import Draggable from 'react-draggable';
 import PropTypes from 'prop-types';
-import ToolBar from '../ToolBar';
+import ToolBar from './ToolBar';
 import './index.css';
 import ThirtySeven from '../../../common-utils/ThirtySeven.js';
 import alertify from 'alertify.js';
