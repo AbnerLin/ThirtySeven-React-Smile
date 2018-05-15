@@ -2,8 +2,8 @@ import React from 'react';
 import ThirtySeven from '../../common-utils/ThirtySeven.js';
 import { connect } from 'react-redux';
 import { Nav, NavItem, NavLink } from 'reactstrap';
-import Map from '../Map';
-import { Customer } from '../../actions/creators';
+import MapComponent from '../Map';
+import { Customer, Map } from '../../actions/creators';
 
 import './index.css';
 
@@ -20,17 +20,24 @@ class App extends React.Component {
 
   async componentWillReceiveProps(nextProps) {
     if(nextProps.isLogin) {
-      // fecth map data from server.
+
+      /** fetch furnish class data from server. */
+      await ThirtySeven.ajax.get('/map/furnishClass').then(res => {
+        this.props.initFurnishClass(res._data);
+      });
+
+      /** fecth map data from server. */
       await ThirtySeven.ajax.get('map').then(res => {
         this.setState({
             maps: res._data
         });
       });
 
-      // fetch customer data from server.
+      /** fetch customer data from server. */
       await ThirtySeven.ajax.get('customer').then(res => {
         this.props.initCustomerInfo(res._data);
       });
+
     }
   }
 
@@ -57,7 +64,7 @@ class App extends React.Component {
                 </NavItem>
               )}
             </Nav>
-            <Map map={this.state.maps[this.state.focusTabIndex]} />
+            <MapComponent map={this.state.maps[this.state.focusTabIndex]} />
           </div>
         ) : (
           null
@@ -77,6 +84,9 @@ const mapDispatchToProps = dispatch => {
   return {
     initCustomerInfo: customerInfo => {
       dispatch(Customer.init(customerInfo));
+    },
+    initFurnishClass: furnishClass => {
+      dispatch(Map.initFurnishClass(furnishClass));
     }
   };
 };

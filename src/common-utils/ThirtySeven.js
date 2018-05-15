@@ -30,7 +30,6 @@ class ThirtySeven {
         return Promise.reject(res._msg);
       }
       return res.data;
-
     }, (err) => {
       return Promise.reject(err);
     });

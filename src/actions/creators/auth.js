@@ -4,7 +4,7 @@ class Auth {
 
   setAuth(userInfo) {
     return {
-      type: AUTH.SET,
+      type: AUTH.INIT,
       userInfo
     };
   }

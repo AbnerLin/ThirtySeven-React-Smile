@@ -18,10 +18,26 @@
   font-weight: bolder;
 }
 
-.furnish-inuse {
+.table {
   background: url('./images/table-sm.png') no-repeat center;
 }
 
-.furnish-empty {
+.empty_table {
   background: url('./images/empty-table-sm.png') no-repeat center;
+}
+
+.tree {
+  background: url('./images/tree.png') no-repeat center;
+}
+
+.door {
+  background: url('./images/door.png') no-repeat center;
+}
+
+.bar {
+  background: url('./images/bar.png') no-repeat center;
+}
+
+.restroom {
+  background: url('./images/restroom.png') no-repeat center;
 }

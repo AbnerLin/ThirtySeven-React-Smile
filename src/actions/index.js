@@ -6,7 +6,7 @@ export const RESET = 'RESET'; // Refetch all data from server.
 
 /** Auth actions */
 export const AUTH = {
-  SET: 'SET',
+  INIT: 'INIT',
   DESTROY: 'DESTROY'
 };
 
@@ -24,6 +24,11 @@ export const WINDOW = {
     HIDE_MODAL: 'HIDE_MODAL'
   }
 };
+
+/** Map actions */
+export const MAP = {
+  INIT: 'INIT'
+}
 
 /** Map actions */
 export const ADD_FURNISH = 'ADD_FURNISH';
