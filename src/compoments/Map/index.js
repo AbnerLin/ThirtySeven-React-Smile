@@ -68,7 +68,7 @@ class Map extends React.Component {
     const FurnishList = () => {
       const itemList = this.state.mapInfo ? this.state.mapInfo.furnishList : null;
       var items = null;
-      console.log('))))))))))))))))))0000');
+
       if (itemList) {
         items = itemList.map((item) => {
 

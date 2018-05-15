@@ -16,21 +16,11 @@ class Furnish extends React.Component {
     name: ''
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   render() {
-    // console.log(this.props.furnishClass);
-    // console.log(this.props.type);
-    // console.log(this.props.name);
-    // console.log(this.props.name);
-    // console.log('----');
-
-    // let iconClassName = _.find(this.props.furnishClass, (o) => {
-    //   return this.props.type === o.classid;
-    // }).name.toLowerCase();
-    let iconClassName = 'table';
+    let iconClassName = _.find(this.props.furnishClass, (o) => {
+      return this.props.type === o.classid;
+    });
+    iconClassName = iconClassName ? iconClassName.name.toLowerCase() : '';
 
     return (
       <div className="box">
@@ -42,7 +32,6 @@ class Furnish extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state.map);
   return {
     furnishClass: state.map.furnishClass
   };
