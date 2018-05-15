@@ -1,84 +1,58 @@
 import React from 'react';
-import Draggable from 'react-draggable';
 import PropTypes from 'prop-types';
-import ToolBar from './ToolBar';
+import { connect } from 'react-redux';
+import _ from 'lodash';
+
 import './index.css';
-import ThirtySeven from '../../../common-utils/ThirtySeven.js';
-import alertify from 'alertify.js';
 
 class Furnish extends React.Component {
 
+  static propTypes = {
+    type: PropTypes.string.isRequired,
+    name: PropTypes.string
+  };
+
+  static defaultProps = {
+    name: ''
+  };
+
   constructor(props) {
     super(props);
-
-    this.furnishOnClick = this.furnishOnClick.bind(this);
-    this.onDragStop = this.onDragStop.bind(this);
-    this.furnishOnDelete = this.furnishOnDelete.bind(this);
-  }
-
-  furnishOnClick() {
-    // TODO
-    // console.log(this.props.furnish.furnishId + ' on click!');
-    // alertify.success(this.props.furnish.furnishid + ' on click!');
-    // alertify.success(this.props.furnish.name + ' on click!!!');
-    // console.log(this.props.customerInfo);
-    console.log(this.props.inUse);
-  }
-
-  furnishOnDelete(furnishId) {
-    alertify
-      .okBtn('Yes')
-      .cancelBtn('No')
-      .confirm('Are you sure to delete?', () => {
-        deleteApi();
-      }, () => {
-        // pass
-      });
-
-    const deleteApi = () => {
-      ThirtySeven.ajax.delete('map/furnish/' + furnishId).then(result => {
-        if(result._status) {
-          this.props.furnishOnDeleted(furnishId);
-          alertify.logPosition('bottom right').success('delete success.')
-        } else {
-          alertify.logPosition('bottom right').error(result._msg);
-        }
-      });
-    };
-  }
-
-  onDragStop(event, draggableData, furnish) {
-    furnish.name = furnish.name;
-    furnish.x = draggableData.x;
-    furnish.y = draggableData.y;
-    ThirtySeven.ajax.put('map/furnish/' + furnish.furnishid, {
-      furnish: furnish
-    });
   }
 
   render() {
-    const furnish = this.props.furnish;
+    // console.log(this.props.furnishClass);
+    // console.log(this.props.type);
+    // console.log(this.props.name);
+    // console.log(this.props.name);
+    // console.log('----');
+
+    // let iconClassName = _.find(this.props.furnishClass, (o) => {
+    //   return this.props.type === o.classid;
+    // }).name.toLowerCase();
+    let iconClassName = 'table';
+
     return (
-      <Draggable
-        bounds="parent"
-        axis="both"
-        handle=".handle"
-        onStop={ (event, draggableData) => {
-          this.onDragStop(event, draggableData, furnish);
-        }}
-        id={furnish.furnishid}
-        defaultPosition={{x: furnish.x, y: furnish.y}}>
-        <div className="box">
-          { this.props.control ? <ToolBar furnish={furnish} onDelete={this.furnishOnDelete} /> : null }
-          <div className={"furnish d-flex justify-content-center align-items-center " + (this.props.inUse ? "furnish-inuse" : "furnish-empty") } onClick={this.furnishOnClick}>{furnish.name}</div>
-        </div>
-      </Draggable>
-     );
+      <div className="box">
+        {this.props.children}
+        <div className={"furnish d-flex justify-content-center align-items-center " + iconClassName }>{this.props.name}</div>
+      </div>
+    )
   }
 }
 
-Furnish.propTypes = {
-  furnish: PropTypes.object
+const mapStateToProps = state => {
+  console.log(state.map);
+  return {
+    furnishClass: state.map.furnishClass
+  };
 };
 
-export default Furnish;
+const mapDispatchToProps = dispatch => {
+  return {};
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Furnish);

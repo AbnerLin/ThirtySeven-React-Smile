@@ -9,7 +9,7 @@ const initialState = {
 
 const auth = (state = initialState, action) => {
   switch (action.type) {
-    case AUTH.SET:
+    case AUTH.INIT:
       return Object.assign({}, {
         isLogin: true,
         userInfo: action.userInfo

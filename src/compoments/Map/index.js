@@ -58,24 +58,28 @@ class Map extends React.Component {
     document.addEventListener('keydown', this.onKeyDown);
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.map !== this.props.map) {
-      this.getMapInfo();
+    componentDidUpdate(prevProps) {
+      if (prevProps.map !== this.props.map) {
+        this.getMapInfo();
+      }
     }
-  }
 
   render() {
     const FurnishList = () => {
       const itemList = this.state.mapInfo ? this.state.mapInfo.furnishList : null;
       var items = null;
-
+      console.log('))))))))))))))))))0000');
       if (itemList) {
         items = itemList.map((item) => {
+
           var inUse = _.find(this.props.customerInfo, (o) => {
             return o.furnish === item.furnishid;
           });
 
           return <Furnish key={ item.furnishid }
+                          type={ item.furnishclass }
+                          name={ item.name }
+
                           control={ this.state.control }
                           furnish={ item }
                           furnishOnDeleted={ this.furnishOnDeleted }
