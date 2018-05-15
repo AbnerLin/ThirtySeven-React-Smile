@@ -8,6 +8,7 @@ const initialState = {
 };
 
 const customer = (state = initialState, action) => {
+
   switch(action.type) {
     case CUSTOMER.INIT:
       return Object.assign({}, {
