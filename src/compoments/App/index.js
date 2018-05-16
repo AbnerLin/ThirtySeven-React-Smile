@@ -20,11 +20,10 @@ class App extends React.Component {
 
   async componentWillReceiveProps(nextProps) {
     if(nextProps.isLogin) {
-      /** fecth map data from server. */
-      await ThirtySeven.ajax.get('map').then(res => {
-        this.setState({
-            maps: res._data
-        });
+
+      /** fetch furnish class data from server. */
+      await ThirtySeven.ajax.get('/map/furnishClass').then(res => {
+        this.props.initFurnishClass(res._data);
       });
 
       /** fetch customer data from server. */
@@ -32,10 +31,13 @@ class App extends React.Component {
         this.props.initCustomerInfo(res._data);
       });
 
-      /** fetch furnish class data from server. */
-      await ThirtySeven.ajax.get('/map/furnishClass').then(res => {
-        this.props.initFurnishClass(res._data);
+      /** fecth map data from server. */
+      await ThirtySeven.ajax.get('map').then(res => {
+        this.setState({
+            maps: res._data
+        });
       });
+
     }
   }
 

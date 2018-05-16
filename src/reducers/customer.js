@@ -3,15 +3,14 @@
  */
 import { CUSTOMER } from '../actions';
 
-const initialState = {
+const cinitialState = {
   customerInfo: null
 };
 
-const customer = (state = initialState, action) => {
-
+const customer = (state = cinitialState, action) => {
   switch(action.type) {
     case CUSTOMER.INIT:
-      return Object.assign({}, {
+      return Object.assign({}, state, {
         customerInfo: action.customerInfo
       });
     case CUSTOMER.CHECKIN:

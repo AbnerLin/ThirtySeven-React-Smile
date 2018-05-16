@@ -58,11 +58,11 @@ class Map extends React.Component {
     document.addEventListener('keydown', this.onKeyDown);
   }
 
-    componentDidUpdate(prevProps) {
-      if (prevProps.map !== this.props.map) {
-        this.getMapInfo();
-      }
+  componentDidUpdate(prevProps) {
+    if (prevProps.map !== this.props.map) {
+      this.getMapInfo();
     }
+  }
 
   render() {
     const FurnishList = () => {
