@@ -6,13 +6,13 @@ export const RESET = 'RESET'; // Refetch all data from server.
 
 /** Auth actions */
 export const AUTH = {
-  INIT: 'INIT',
+  INIT: 'AUTH_INIT',
   DESTROY: 'DESTROY'
 };
 
 /** Customer actions */
 export const CUSTOMER = {
-  INIT: 'INIT',
+  INIT: 'CUSTOMER_INIT',
   CHECKIN: 'CHECKIN',
   CHECKOUT: 'CHECKOUT'
 };
@@ -27,7 +27,7 @@ export const WINDOW = {
 
 /** Map actions */
 export const MAP = {
-  INIT: 'INIT'
+  INIT: 'MAP_INIT'
 }
 
 /** Map actions */
