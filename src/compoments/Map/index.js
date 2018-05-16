@@ -3,6 +3,8 @@ import ThirtySeven from '../../common-utils/ThirtySeven.js';
 import { connect } from 'react-redux';
 import Furnish from './Furnish';
 import _ from 'lodash';
+import { withDraggable } from './Furnish/hoc';
+
 import './index.css';
 
 class Map extends React.Component {
@@ -18,6 +20,7 @@ class Map extends React.Component {
 
     this.onKeyDown = this.onKeyDown.bind(this);
     this.furnishOnDeleted = this.furnishOnDeleted.bind(this);
+    this.furnishOnDragStop = this.furnishOnDragStop.bind(this);
   }
 
   getMapInfo() {
@@ -53,6 +56,10 @@ class Map extends React.Component {
     });
   }
 
+  furnishOnDragStop(event, draggableData, furnishId) {
+    console.log('furnish on drag stop.' + furnishId);
+  }
+
   componentDidMount() {
     this.getMapInfo();
     document.addEventListener('keydown', this.onKeyDown);
@@ -76,17 +83,32 @@ class Map extends React.Component {
             return o.furnish === item.furnishid;
           });
 
-          return <Furnish key={ item.furnishid }
-                          type={ item.furnishclass }
-                          name={ item.name }
 
-                          control={ this.state.control }
-                          furnish={ item }
-                          furnishOnDeleted={ this.furnishOnDeleted }
-                          inUse={ inUse ? true : false }
-          />
+          // return <Furnish key={ item.furnishid }
+          //                 type={ item.furnishclass }
+          //                 name={ item.name }
+
+          //                 control={ this.state.control }
+          //                 furnish={ item }
+          //                 furnishOnDeleted={ this.furnishOnDeleted }
+          //                 inUse={ inUse ? true : false }
+          // />
+
+          const Draggable = withDraggable(Furnish, item.name, item.furnishclass);
+          return (
+            <Draggable
+                       key={item.furnishid}
+                       id={item.furnishid}
+                       x={item.x}
+                       y={item.y}
+                       control={this.state.control}
+                       onDragStop={this.furnishOnDragStop}
+                       onDelete={this.furnishOnDeleted}
+            />
+          );
         });
       }
+      console.log(items);
 
       return items;
     };

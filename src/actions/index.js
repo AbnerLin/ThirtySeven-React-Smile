@@ -28,7 +28,7 @@ export const WINDOW = {
 /** Map actions */
 export const MAP = {
   INIT: 'MAP_INIT'
-}
+};
 
 /** Map actions */
 export const ADD_FURNISH = 'ADD_FURNISH';
