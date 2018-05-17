@@ -1,6 +1,7 @@
 import React from 'react';
-import ThirtySeven from '../../common-utils/ThirtySeven.js';
+import { ThirtySeven, MapUtils } from '../../common-utils/';
 import { connect } from 'react-redux';
+import alertify from 'alertify.js';
 import Furnish from './Furnish';
 import _ from 'lodash';
 import { withDraggable } from './Furnish/hoc';
@@ -19,8 +20,19 @@ class Map extends React.Component {
     };
 
     this.onKeyDown = this.onKeyDown.bind(this);
-    this.furnishOnDeleted = this.furnishOnDeleted.bind(this);
+    this.furnishOnDelete = this.furnishOnDelete.bind(this);
     this.furnishOnDragStop = this.furnishOnDragStop.bind(this);
+  }
+
+  componentDidMount() {
+    this.getMapInfo();
+    document.addEventListener('keydown', this.onKeyDown);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.map !== this.props.map) {
+      this.getMapInfo();
+    }
   }
 
   getMapInfo() {
@@ -44,31 +56,52 @@ class Map extends React.Component {
     }
   }
 
-  furnishOnDeleted(furnishId) {
-    this.setState((prevState, props) => {
-      _.remove(prevState.mapInfo.furnishList, (furnish) => {
-        return furnish.furnishid === furnishId;
+  furnishOnDelete(furnishId) {
+    alertify
+      .okBtn('Yes')
+      .cancelBtn('No')
+      .confirm('Are you sure to delete?', () => {
+        deleteApi();
+      }, () => {
+        // pass
       });
 
-      return ({
-        mapInfo: prevState.mapInfo
+    const deleteApi = () => {
+      ThirtySeven.ajax.delete('map/furnish/' + furnishId).then(result => {
+        if(result._status) {
+          alertify.logPosition('bottom right').success('delete success.');
+          updateState();
+        } else {
+          alertify.logPosition('bottom right').error(result._msg);
+        }
       });
-    });
+    };
+
+    const updateState = () => {
+      /** update state. */
+      this.setState((prevState, props) => {
+        _.remove(prevState.mapInfo.furnishList, (furnish) => {
+          return furnish.furnishid === furnishId;
+        });
+        return ({
+          mapInfo: prevState.mapInfo
+        });
+      });
+    };
   }
 
   furnishOnDragStop(event, draggableData, furnishId) {
-    console.log('furnish on drag stop.' + furnishId);
-  }
 
-  componentDidMount() {
-    this.getMapInfo();
-    document.addEventListener('keydown', this.onKeyDown);
-  }
+    var furnish = _.find(this.state.mapInfo.furnishList, (o) => {
+      return o.furnishid === furnishId;
+    });
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.map !== this.props.map) {
-      this.getMapInfo();
-    }
+    furnish.x = draggableData.x;
+    furnish.y = draggableData.y;
+
+    ThirtySeven.ajax.put('map/furnish/' + furnish.furnishid, {
+      furnish: furnish
+    });
   }
 
   render() {
@@ -79,36 +112,50 @@ class Map extends React.Component {
       if (itemList) {
         items = itemList.map((item) => {
 
+          /** check if furnish is table, and if in use. */
           var inUse = _.find(this.props.customerInfo, (o) => {
             return o.furnish === item.furnishid;
           });
 
+          // TODO
+          console.log(MapUtils.FurnishClass);
 
-          // return <Furnish key={ item.furnishid }
-          //                 type={ item.furnishclass }
-          //                 name={ item.name }
+          var furnishClass = null;
+          if(inUse) {
+            furnishClass = inUse.furnishObj.furnishclass;
+          } else {
+            /** find table class uuid */
+            var tableClass = _.find(this.props.furnishClass, (o) => {
+              return o.name === 'TABLE';
+            }).classid;
 
-          //                 control={ this.state.control }
-          //                 furnish={ item }
-          //                 furnishOnDeleted={ this.furnishOnDeleted }
-          //                 inUse={ inUse ? true : false }
-          // />
+            /** find empty table class uuid */
+            var emptyTableClass = _.find(this.props.furnishClass, (o) => {
+              return o.name === 'EMPTY_TABLE';
+            }).classid;
 
-          const Draggable = withDraggable(Furnish, item.name, item.furnishclass);
+            furnishClass = emptyTableClass;
+            if(item.furnishclass !== tableClass) {
+              furnishClass = item.furnishclass;
+            }
+          }
+
+          /** hoc */
+          const Draggable = withDraggable(Furnish, item.name, furnishClass);
+
           return (
             <Draggable
-                       key={item.furnishid}
-                       id={item.furnishid}
-                       x={item.x}
-                       y={item.y}
-                       control={this.state.control}
-                       onDragStop={this.furnishOnDragStop}
-                       onDelete={this.furnishOnDeleted}
+                key={item.furnishid}
+                id={item.furnishid}
+                x={item.x}
+                y={item.y}
+                control={this.state.control}
+                onDragStop={this.furnishOnDragStop}
+                onDelete={this.furnishOnDelete}
             />
           );
         });
       }
-      console.log(items);
 
       return items;
     };
@@ -127,7 +174,8 @@ class Map extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    customerInfo: state.customer.customerInfo
+    customerInfo: state.customer.customerInfo,
+    furnishClass: state.map.furnishClass
   };
 };
 

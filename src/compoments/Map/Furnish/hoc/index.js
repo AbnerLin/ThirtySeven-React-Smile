@@ -30,9 +30,11 @@ export const withDraggable = (WrappedComponent, name, furnishclass) => {
           }
           id={this.props.id}
           defaultPosition={{x: this.props.x, y: this.props.y}}>
-          <WrappedComponent name={name} type={furnishclass}>
-            { this.props.control ? <ToolBar furnishid={this.props.id} onDelete={this.props.onDelete} /> : null }
-          </WrappedComponent>
+          <div className="box">
+            <WrappedComponent name={name} type={furnishclass}>
+              { this.props.control ? <ToolBar furnishid={this.props.id} onDelete={this.props.onDelete} /> : null }
+            </WrappedComponent>
+          </div>
         </Draggable>
       );
     }

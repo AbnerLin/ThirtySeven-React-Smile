@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ThirtySeven from './common-utils/ThirtySeven';
+import { ThirtySeven, ReduxStore } from './common-utils';
 import { Provider } from 'react-redux'
 import { Auth, Window } from './actions/creators'
-import { store } from './common-utils/ThirtySeven';
 
 import App from './compoments/App';
 import Header from './compoments/Header';
@@ -26,15 +25,15 @@ class MainPage extends React.Component {
     /** Get user info. */
     ThirtySeven.ajax.get('auth').then(res => {
       if (res && res._status === true) {
-        store.dispatch(Auth.setAuth(res._data));
-        store.dispatch(Window.login.hideModal());
+        ReduxStore.dispatch(Auth.setAuth(res._data));
+        ReduxStore.dispatch(Window.login.hideModal());
       }
     });
   }
 
   render() {
     return (
-      <Provider store={store}>
+      <Provider store={ReduxStore}>
         <div>
           <LoginForm force={false} />
           <Header title={Config.Title} subTitle={Config.SubTitle} />
