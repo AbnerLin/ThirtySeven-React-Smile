@@ -2,7 +2,7 @@ import React from 'react';
 import ThirtySeven from '../../common-utils/ThirtySeven.js';
 import PropTypes from 'prop-types';
 
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Form, Alert, InputGroup, InputGroupAddon } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Form, Alert, InputGroup, InputGroupAddon } from 'reactstrap';
 import { Auth, Window } from '../../actions/creators';
 import { connect } from 'react-redux';
 
@@ -11,13 +11,16 @@ import './index.css';
 
 class LoginForm extends React.Component {
 
+  static propTypes = {
+    loginSucceed: PropTypes.func,
+    force: PropTypes.bool
+  };
+
   constructor(props) {
     super(props);
     this.state = {
       force: this.props.force, // force login, the modal will not dismiss if true.
       modalShow: this.props.modalShow,
-      account: '',
-      password: '',
       btnDisabled: true,
       errorMsg: null
     }
@@ -44,26 +47,24 @@ class LoginForm extends React.Component {
   }
 
   handleChange(event) {
+    let _btnDisabled = this.state.btnDisabled;
+
+    if(this.accountInput.value !== '' && this.passwordInput.value !== '') {
+      _btnDisabled = false;
+    } else {
+        _btnDisabled = true;
+    }
+
     this.setState({
-      [event.target.name]: event.target.value
-    }, () => {
-      var _btnDisabled = this.state.btnDisabled;
-      if (this.state.account !== '' && this.state.password !== '') {
-          _btnDisabled = false;
-      } else {
-          _btnDisabled = true;
-      }
-      this.setState({
-          btnDisabled: _btnDisabled
-      });
+        btnDisabled: _btnDisabled
     });
   }
 
   login(event) {
     event.preventDefault();
     ThirtySeven.ajax.post('auth/login', {
-        username: this.state.account,
-        password: this.state.password
+        username: this.accountInput.value,
+        password: this.passwordInput.value
     }).then(res => {
       if (!res._status) {
         this.setState({
@@ -72,8 +73,6 @@ class LoginForm extends React.Component {
       } else {
         this.props.loginSucceed(res._data);
         this.setState({
-          account: '',
-          password: '',
           errorMsg: null
         });
       }
@@ -96,20 +95,20 @@ class LoginForm extends React.Component {
                       <FormGroup className="mb-2 mr-sm-2 col-12">
                         <InputGroup>
                           <InputGroupAddon addonType="prepend">帳號</InputGroupAddon>
-                          <Input
+                          <input className="form-control"
                             type="text"
                             name="account"
-                            value={this.state.account}
+                            ref={(input) => this.accountInput = input}
                             onChange={this.handleChange} />
                         </InputGroup>
                       </FormGroup>
                       <FormGroup className="mb-2 mr-sm-2 col-12">
                         <InputGroup>
                           <InputGroupAddon addonType="prepend">密碼</InputGroupAddon>
-                          <Input
+                          <input className="form-control"
                             type="password"
                             name="password"
-                            value={this.state.password}
+                            ref={(input) => this.passwordInput = input}
                             onChange={this.handleChange} />
                         </InputGroup>
                       </FormGroup>
@@ -136,12 +135,6 @@ class LoginForm extends React.Component {
     );
   }
 }
-
-LoginForm.propTypes = {
-  loginSucceed: PropTypes.func,
-  force: PropTypes.bool
-};
-
 
 const mapStateToProps = state => {
   return {
