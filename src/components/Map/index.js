@@ -1,5 +1,5 @@
 import React from 'react';
-import { ThirtySeven, MapUtils } from '../../common-utils/';
+import { ThirtySeven, MapUtils } from 'common-utils';
 import { connect } from 'react-redux';
 import alertify from 'alertify.js';
 import Furnish from './Furnish';
@@ -117,22 +117,15 @@ class Map extends React.Component {
             return o.furnish === item.furnishid;
           });
 
-          // TODO
-          console.log(MapUtils.FurnishClass);
-
           var furnishClass = null;
           if(inUse) {
             furnishClass = inUse.furnishObj.furnishclass;
           } else {
             /** find table class uuid */
-            var tableClass = _.find(this.props.furnishClass, (o) => {
-              return o.name === 'TABLE';
-            }).classid;
+            var tableClass = MapUtils.FurnishClass.getByName('TABLE').classid;
 
             /** find empty table class uuid */
-            var emptyTableClass = _.find(this.props.furnishClass, (o) => {
-              return o.name === 'EMPTY_TABLE';
-            }).classid;
+            var emptyTableClass = MapUtils.FurnishClass.getByName('EMPTY_TABLE').classid;
 
             furnishClass = emptyTableClass;
             if(item.furnishclass !== tableClass) {
@@ -174,8 +167,7 @@ class Map extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    customerInfo: state.customer.customerInfo,
-    furnishClass: state.map.furnishClass
+    customerInfo: state.customer.customerInfo
   };
 };
 

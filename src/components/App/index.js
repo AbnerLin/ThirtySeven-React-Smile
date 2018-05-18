@@ -1,9 +1,9 @@
 import React from 'react';
-import ThirtySeven from '../../common-utils/ThirtySeven.js';
+import { ThirtySeven } from 'common-utils';
 import { connect } from 'react-redux';
 import { Nav, NavItem, NavLink } from 'reactstrap';
-import MapComponent from '../Map';
-import { Customer, Map } from '../../actions/creators';
+import MapComponent from 'components/Map';
+import { CustomerReduxCreator, MapReduxCreator } from 'actions/creators';
 
 import './index.css';
 
@@ -82,10 +82,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     initCustomerInfo: customerInfo => {
-      dispatch(Customer.init(customerInfo));
+      dispatch(CustomerReduxCreator.init(customerInfo));
     },
     initFurnishClass: furnishClass => {
-      dispatch(Map.initFurnishClass(furnishClass));
+      dispatch(MapReduxCreator.FurnishClass.initFurnishClass(furnishClass));
     }
   };
 };

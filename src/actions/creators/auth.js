@@ -1,15 +1,15 @@
-import { AUTH } from '../index';
+import { AUTH } from 'actions';
 
 class Auth {
 
-  setAuth(userInfo) {
+  static setAuth(userInfo) {
     return {
       type: AUTH.INIT,
       userInfo
     };
   }
 
-  destroyAuth() {
+  static destroyAuth() {
     return {
       type: AUTH.DESTROY
     };

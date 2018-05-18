@@ -1,9 +1,9 @@
 import React from 'react';
-import ThirtySeven from '../../common-utils/ThirtySeven.js';
+import { ThirtySeven } from 'common-utils';
 import PropTypes from 'prop-types';
 
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Form, Alert, InputGroup, InputGroupAddon } from 'reactstrap';
-import { Auth, Window } from '../../actions/creators';
+import { AuthReduxCreator, WindowReduxCreator } from 'actions/creators';
 import { connect } from 'react-redux';
 
 import 'bootstrap/dist/css/bootstrap.css';
@@ -145,11 +145,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     loginSucceed: userInfo => {
-      dispatch(Auth.setAuth(userInfo));
-      dispatch(Window.login.hideModal());
+      dispatch(AuthReduxCreator.setAuth(userInfo));
+      dispatch(WindowReduxCreator.login.hideModal());
     },
     hideModal: () => {
-      dispatch(Window.login.hideModal());
+      dispatch(WindowReduxCreator.login.hideModal());
     }
   };
 };

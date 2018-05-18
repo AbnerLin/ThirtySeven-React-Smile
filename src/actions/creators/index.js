@@ -1,10 +1,6 @@
-import AuthClass from './auth';
-import WindowClass from './window';
-import CustomerClass from './customer';
-import MapClass from './map';
+import AuthReduxCreator from './auth';
+import WindowReduxCreator from './window';
+import CustomerReduxCreator from './customer';
+import MapReduxCreator from './map';
 
-export const Auth = new AuthClass();
-export const Window = new WindowClass();
-export const Customer = new CustomerClass();
-export const Map = new MapClass();
-
+export { AuthReduxCreator, WindowReduxCreator, CustomerReduxCreator, MapReduxCreator };

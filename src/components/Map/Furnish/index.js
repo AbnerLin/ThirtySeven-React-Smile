@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import _ from 'lodash';
+import { MapUtils } from 'common-utils';
 
 import './index.css';
 
@@ -17,9 +17,7 @@ class Furnish extends React.Component {
   };
 
   render() {
-    let iconClassName = _.find(this.props.furnishClass, (o) => {
-      return this.props.type === o.classid;
-    });
+    var iconClassName = MapUtils.FurnishClass.getById(this.props.type);
     iconClassName = iconClassName ? iconClassName.name.toLowerCase() : '';
 
     return (

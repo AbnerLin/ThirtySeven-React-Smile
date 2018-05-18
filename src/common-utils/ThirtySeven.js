@@ -1,7 +1,7 @@
-import rootReducer from '../reducers'
+import rootReducer from 'reducers'
 import axios from 'axios';
 import { createStore } from 'redux'
-import { Auth, Window } from '../actions/creators'
+import { AuthReduxCreator, WindowReduxCreator } from 'actions/creators'
 
 
 class ThirtySeven {
@@ -24,8 +24,8 @@ class ThirtySeven {
     this._axios.interceptors.response.use((res) => {
       if (res.data._code === '0040') {
         // invalid authorization
-        ThirtySeven.store.dispatch(Auth.destroyAuth());
-        ThirtySeven.store.dispatch(Window.login.showModal());
+        ThirtySeven.store.dispatch(AuthReduxCreator.destroyAuth());
+        ThirtySeven.store.dispatch(WindowReduxCreator.login.showModal());
         return Promise.reject(res._msg);
       }
       return res.data;

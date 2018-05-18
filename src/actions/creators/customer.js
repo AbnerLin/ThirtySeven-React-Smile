@@ -1,22 +1,22 @@
-import { CUSTOMER } from '../index';
+import { CUSTOMER } from 'actions';
 
 class Customer {
 
-  init(customerInfo) {
+  static init(customerInfo) {
     return {
       type: CUSTOMER.INIT,
       customerInfo
     }
   }
 
-  checkIn(customer) {
+  static checkIn(customer) {
     return {
       type: CUSTOMER.CHECKIN,
       customer
     }
   }
 
-  checkOut(customer) {
+  static checkOut(customer) {
     return {
       type: CUSTOMER.CHECKOUT,
       customer

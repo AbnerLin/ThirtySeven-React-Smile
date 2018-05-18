@@ -1,18 +1,16 @@
-import { WINDOW } from '../index';
+import { WINDOW } from 'actions';
 
 class Window {
 
-  get login() {
-    return {
-      showModal: () => {
-        return {
-          type: WINDOW.LOGIN.SHOW_MODAL
-        }
-      },
-      hideModal: () => {
-        return {
-          type: WINDOW.LOGIN.HIDE_MODAL
-        }
+  static login = {
+    showModal: () => {
+      return {
+        type: WINDOW.LOGIN.SHOW_MODAL
+      }
+    },
+    hideModal: () => {
+      return {
+        type: WINDOW.LOGIN.HIDE_MODAL
       }
     }
   }

@@ -1,14 +1,15 @@
-import { MAP } from '../index';
+import { MAP } from 'actions';
 
 class Map {
 
-  initFurnishClass(furnishClass) {
-    return {
-      type: MAP.INIT,
-      furnishClass
-    };
+  static FurnishClass = {
+    initFurnishClass: (furnishClass) => {
+      return {
+        type: MAP.INIT,
+        furnishClass
+      };
+    }
   }
-
 }
 
 export default Map;
