@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { ThirtySeven, ReduxStore } from 'common-utils';
 import { Provider } from 'react-redux'
 import { AuthReduxCreator, WindowReduxCreator } from 'actions/creators'
-
 import App from 'components/App';
 import Header from 'components/Header';
 import Footer from 'components/Footer';

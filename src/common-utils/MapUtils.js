@@ -18,6 +18,7 @@ class MapUtils {
       });
     }
   }
+
 }
 
 export default MapUtils;
