@@ -25,9 +25,11 @@ class Furnish extends React.Component {
     return (
       <div className="box">
         {this.props.children}
-        <div className={"furnish d-flex justify-content-center align-items-center " + iconClassName }>{this.props.name}</div>
+        <div className={"furnish d-flex justify-content-center align-items-center " + iconClassName }>
+          {this.props.name}
+        </div>
       </div>
-    )
+    );
   }
 }
 
