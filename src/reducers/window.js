@@ -10,11 +10,11 @@ const initalState = {
 const window = (state = initalState, action) => {
   switch(action.type) {
     case WINDOW.LOGIN.SHOW_MODAL:
-      return Object.assign({}, {
+      return Object.assign({}, state, {
         loginForm: true
       });
     case WINDOW.LOGIN.HIDE_MODAL:
-      return Object.assign({}, {
+      return Object.assign({}, state, {
         loginForm: false
       });
     default:
