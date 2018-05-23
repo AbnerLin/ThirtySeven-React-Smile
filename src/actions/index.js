@@ -20,8 +20,10 @@ export const CUSTOMER = {
 /** Windows actions */
 export const WINDOW = {
   LOGIN: {
-    SHOW_MODAL: 'SHOW_MODAL',
-    HIDE_MODAL: 'HIDE_MODAL'
+    TOGGLE: 'LOGIN_FORM.TOGGLE'
+  },
+  OPERATION_PANEL: {
+    TOGGLE: 'OPERATION_PANEL.TOGGLE'
   }
 };
 

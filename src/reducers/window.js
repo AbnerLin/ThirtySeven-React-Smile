@@ -4,18 +4,19 @@
 import { WINDOW } from '../actions';
 
 const initalState = {
-  loginForm: true
+  loginForm: false,
+  operationModal: false
 };
 
 const window = (state = initalState, action) => {
   switch(action.type) {
-    case WINDOW.LOGIN.SHOW_MODAL:
+    case WINDOW.LOGIN.TOGGLE:
       return Object.assign({}, state, {
-        loginForm: true
+        loginForm: !state.loginForm
       });
-    case WINDOW.LOGIN.HIDE_MODAL:
+    case WINDOW.OPERATION_PANEL.TOGGLE:
       return Object.assign({}, state, {
-        loginForm: false
+        operationModal: !state.operationModal
       });
     default:
       return state;

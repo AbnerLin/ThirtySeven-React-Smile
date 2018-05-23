@@ -25,7 +25,7 @@ class ThirtySeven {
       if (res.data._code === '0040') {
         // invalid authorization
         ThirtySeven.store.dispatch(AuthReduxCreator.destroyAuth());
-        ThirtySeven.store.dispatch(WindowReduxCreator.login.showModal());
+        ThirtySeven.store.dispatch(WindowReduxCreator.login.toggleModal());
         return Promise.reject(res._msg);
       }
       return res.data;

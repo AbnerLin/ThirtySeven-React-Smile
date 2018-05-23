@@ -3,14 +3,17 @@ import { WINDOW } from 'actions';
 class Window {
 
   static login = {
-    showModal: () => {
+    toggleModal: () => {
       return {
-        type: WINDOW.LOGIN.SHOW_MODAL
+        type: WINDOW.LOGIN.TOGGLE
       }
-    },
-    hideModal: () => {
+    }
+  }
+
+  static operationPanel = {
+    toggleModal: () => {
       return {
-        type: WINDOW.LOGIN.HIDE_MODAL
+        type: WINDOW.OPERATION_PANEL.TOGGLE
       }
     }
   }

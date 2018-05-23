@@ -1,7 +1,7 @@
 import React from 'react';
 import { ThirtySeven } from 'common-utils';
 import { connect } from 'react-redux';
-import { Button, Nav, NavItem, NavLink, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, Nav, NavItem, NavLink, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import MapComponent from 'components/Map';
 import OperationPanel from 'components/OperationPanel';
 import { CustomerReduxCreator, MapReduxCreator, WindowReduxCreator } from 'actions/creators';
@@ -22,7 +22,7 @@ class App extends React.Component {
 
   async componentWillReceiveProps(nextProps) {
     if(nextProps.isLogin) {
-      console.log('isisisisisisis');
+
       /** fetch furnish class data from server. */
       await ThirtySeven.ajax.get('/map/furnishClass').then(res => {
         this.props.initFurnishClass(res._data);
@@ -59,14 +59,12 @@ class App extends React.Component {
       <div>
 
         <Modal isOpen={this.props.operationModal} toggle={this.props.toggleOperationPanelModal} >
-          <ModalHeader>TODO</ModalHeader>
+          <ModalHeader toggle={this.props.toggleOperationPanelModal}>
+            <OperationPanel.Title />
+          </ModalHeader>
           <ModalBody>
             <OperationPanel />
           </ModalBody>
-          <ModalFooter>
-            <Button color="primary" onClick={this.toggle}>Do Something</Button>{' '}
-            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
-          </ModalFooter>
         </Modal>
         <Button color="secondary" onClick={this.props.toggleOperationPanelModal}>Cancel</Button>
 

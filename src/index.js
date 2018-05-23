@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { ThirtySeven, ReduxStore } from 'common-utils';
 import { Provider } from 'react-redux'
-import { AuthReduxCreator, WindowReduxCreator } from 'actions/creators'
+import { AuthReduxCreator } from 'actions/creators'
 import App from 'components/App';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
@@ -25,7 +25,6 @@ class MainPage extends React.Component {
     ThirtySeven.ajax.get('auth').then(res => {
       if (res && res._status === true) {
         ReduxStore.dispatch(AuthReduxCreator.setAuth(res._data));
-        ReduxStore.dispatch(WindowReduxCreator.login.hideModal());
       }
     });
   }
