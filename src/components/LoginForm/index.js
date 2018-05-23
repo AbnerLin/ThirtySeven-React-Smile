@@ -20,7 +20,7 @@ class LoginForm extends React.Component {
     super(props);
     this.state = {
       force: this.props.force, // force login, the modal will not dismiss if true.
-      modalShow: this.props.modalShow,
+      // modalShow: this.props.modalShow,
       btnDisabled: true,
       errorMsg: null
     }
@@ -30,11 +30,11 @@ class LoginForm extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      modalShow: nextProps.modalShow
-    });
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   this.setState({
+  //     modalShow: nextProps.modalShow
+  //   });
+  // }
 
   toggle() {
     if (this.state.force) {
@@ -42,7 +42,7 @@ class LoginForm extends React.Component {
         errorMsg: 'Must login first.'
       });
     } else {
-      this.props.hideModal();
+      this.props.toggleModal();
     }
   }
 
@@ -72,6 +72,7 @@ class LoginForm extends React.Component {
         });
       } else {
         this.props.loginSucceed(res._data);
+        this.props.toggleModal();
         this.setState({
           errorMsg: null
         });
@@ -82,7 +83,7 @@ class LoginForm extends React.Component {
   render() {
     return (
       <div>
-        <Modal isOpen={this.state.modalShow} toggle={this.toggle} className="modal-lg modal-dialog-centered">
+        <Modal isOpen={this.props.modalShow} toggle={this.toggle} className="modal-lg modal-dialog-centered">
             <ModalHeader toggle={this.toggle}>{''}</ModalHeader>
             <ModalBody className="mt-4">
               <div className="container-fluid">
@@ -146,10 +147,13 @@ const mapDispatchToProps = dispatch => {
   return {
     loginSucceed: userInfo => {
       dispatch(AuthReduxCreator.setAuth(userInfo));
-      dispatch(WindowReduxCreator.login.hideModal());
+      // dispatch(WindowReduxCreator.login.hideModal());
     },
-    hideModal: () => {
-      dispatch(WindowReduxCreator.login.hideModal());
+    // hideModal: () => {
+    //   dispatch(WindowReduxCreator.login.hideModal());
+    // }
+    toggleModal: () => {
+      dispatch(WindowReduxCreator.login.toggleModal());
     }
   };
 };

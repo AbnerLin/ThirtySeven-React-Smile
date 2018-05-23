@@ -1,9 +1,10 @@
 import React from 'react';
 import { ThirtySeven } from 'common-utils';
 import { connect } from 'react-redux';
-import { Nav, NavItem, NavLink } from 'reactstrap';
+import { Button, Nav, NavItem, NavLink, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import MapComponent from 'components/Map';
-import { CustomerReduxCreator, MapReduxCreator } from 'actions/creators';
+import OperationPanel from 'components/OperationPanel';
+import { CustomerReduxCreator, MapReduxCreator, WindowReduxCreator } from 'actions/creators';
 import './index.css';
 
 class App extends React.Component {
@@ -12,14 +13,16 @@ class App extends React.Component {
     super(props);
     this.state = {
         maps: null,
-        focusTabIndex: 0
+        focusTabIndex: 0,
+        operationPanelModal: false
     };
     this.navOnClick = this.navOnClick.bind(this);
+    this.operationPanelModalToggle = this.operationPanelModalToggle.bind(this);
   }
 
   async componentWillReceiveProps(nextProps) {
     if(nextProps.isLogin) {
-
+      console.log('isisisisisisis');
       /** fetch furnish class data from server. */
       await ThirtySeven.ajax.get('/map/furnishClass').then(res => {
         this.props.initFurnishClass(res._data);
@@ -36,7 +39,6 @@ class App extends React.Component {
             maps: res._data
         });
       });
-
     }
   }
 
@@ -46,9 +48,28 @@ class App extends React.Component {
     });
   }
 
+  operationPanelModalToggle() {
+    this.setState({
+      operationPanelModal: !this.state.operationPanelModal
+    });
+  }
+
   render() {
     return (
       <div>
+
+        <Modal isOpen={this.props.operationModal} toggle={this.props.toggleOperationPanelModal} >
+          <ModalHeader>TODO</ModalHeader>
+          <ModalBody>
+            <OperationPanel />
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={this.toggle}>Do Something</Button>{' '}
+            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+          </ModalFooter>
+        </Modal>
+        <Button color="secondary" onClick={this.props.toggleOperationPanelModal}>Cancel</Button>
+
         { this.state.maps ? (
           <div className="mt-3">
             <Nav tabs>
@@ -75,7 +96,8 @@ class App extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    isLogin: state.auth.isLogin
+    isLogin: state.auth.isLogin,
+    operationModal: state.window.operationModal
   };
 };
 
@@ -86,6 +108,9 @@ const mapDispatchToProps = dispatch => {
     },
     initFurnishClass: furnishClass => {
       dispatch(MapReduxCreator.FurnishClass.initFurnishClass(furnishClass));
+    },
+    toggleOperationPanelModal: () => {
+      dispatch(WindowReduxCreator.operationPanel.toggleModal())
     }
   };
 };

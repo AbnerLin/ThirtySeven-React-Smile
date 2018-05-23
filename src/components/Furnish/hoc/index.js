@@ -6,6 +6,7 @@ import ToolBar from '../ToolBar';
 export const withDraggable = (WrappedComponent, name, furnishclass) => {
 
   return class extends React.Component {
+
     static propTypes = {
       id: PropTypes.string.isRequired,
       x: PropTypes.number.isRequired,
@@ -16,7 +17,6 @@ export const withDraggable = (WrappedComponent, name, furnishclass) => {
     }
 
     render() {
-
       return (
         <Draggable
           bounds="parent"

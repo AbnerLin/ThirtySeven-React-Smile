@@ -2,9 +2,9 @@ import React from 'react';
 import { ThirtySeven, MapUtils } from 'common-utils';
 import { connect } from 'react-redux';
 import alertify from 'alertify.js';
-import Furnish from './Furnish';
+import Furnish from 'components/Furnish';
 import _ from 'lodash';
-import { withDraggable } from './Furnish/hoc';
+import { withDraggable } from 'components/Furnish/hoc';
 
 import './index.css';
 
