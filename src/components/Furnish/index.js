@@ -9,7 +9,8 @@ class Furnish extends React.Component {
 
   static propTypes = {
     type: PropTypes.string.isRequired,
-    name: PropTypes.string
+    name: PropTypes.string,
+    onClick: PropTypes.func
   };
 
   static defaultProps = {
@@ -23,7 +24,7 @@ class Furnish extends React.Component {
     return (
       <div className="box">
         {this.props.children}
-        <div className={"furnish d-flex justify-content-center align-items-center " + iconClassName }>
+        <div onClick={this.props.onClick} className={"furnish d-flex justify-content-center align-items-center " + iconClassName }>
           {this.props.name}
         </div>
       </div>

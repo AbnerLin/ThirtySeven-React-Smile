@@ -1,13 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Draggable from 'react-draggable';
 import ToolBar from '../ToolBar';
+import { WindowReduxCreator } from 'actions/creators';
 
-export const withDraggable = (WrappedComponent, name, furnishclass) => {
+export const withDraggable = (WrappedComponent) => {
 
   return class extends React.Component {
 
     static propTypes = {
+      name: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
       id: PropTypes.string.isRequired,
       x: PropTypes.number.isRequired,
       y: PropTypes.number.isRequired,
@@ -30,7 +34,7 @@ export const withDraggable = (WrappedComponent, name, furnishclass) => {
           id={this.props.id}
           defaultPosition={{x: this.props.x, y: this.props.y}}>
           <div className="box">
-            <WrappedComponent name={name} type={furnishclass}>
+            <WrappedComponent {...this.props}>
               { this.props.control ? <ToolBar furnishid={this.props.id} onDelete={this.props.onDelete} /> : null }
             </WrappedComponent>
           </div>
@@ -41,6 +45,37 @@ export const withDraggable = (WrappedComponent, name, furnishclass) => {
 
 };
 
-export const withMenuPanelTrigger = (WrappedComponent) => {
+export const withOperationPanelTrigger = (WrappedComponent) => {
 
+  class WithOperationPanel extends React.Component {
+
+    constructor(props) {
+      super(props);
+
+      this.toggleOperationPanel = this.toggleOperationPanel.bind(this);
+    }
+
+    toggleOperationPanel() {
+      console.log('!!');
+    }
+
+    render() {
+      return(
+        <WrappedComponent {...this.props} onClick={this.toggleOperationPanel} />
+      );
+    }
+  }
+
+  const mapDispatchToProps = dispatch => {
+    return {
+      toggleOperationPanelModal: () => {
+        dispatch(WindowReduxCreator.operationPanel.toggleModal())
+      }
+    };
+  };
+
+  return connect(
+    null,
+    mapDispatchToProps
+  )(WithOperationPanel);
 };

@@ -3,11 +3,11 @@
  */
 import { CUSTOMER } from '../actions';
 
-const cinitialState = {
+const initialState = {
   customerInfo: null
 };
 
-const customer = (state = cinitialState, action) => {
+const customer = (state = initialState, action) => {
   switch(action.type) {
     case CUSTOMER.INIT:
       return Object.assign({}, state, {

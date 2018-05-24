@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import alertify from 'alertify.js';
 import Furnish from 'components/Furnish';
 import _ from 'lodash';
-import { withDraggable } from 'components/Furnish/hoc';
+import { withDraggable, withOperationPanelTrigger } from 'components/Furnish/hoc';
 
 import './index.css';
 
@@ -134,10 +134,13 @@ class Map extends React.Component {
           }
 
           /** hoc */
-          const Draggable = withDraggable(Furnish, item.name, furnishClass);
+          const Clickable = withOperationPanelTrigger(Furnish);
+          const Draggable = withDraggable(Clickable);
 
           return (
             <Draggable
+                name={item.name}
+                type={furnishClass}
                 key={item.furnishid}
                 id={item.furnishid}
                 x={item.x}

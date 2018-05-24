@@ -31,6 +31,7 @@ class App extends React.Component {
       /** fetch customer data from server. */
       await ThirtySeven.ajax.get('customer').then(res => {
         this.props.initCustomerInfo(res._data);
+        console.log(res._data);
       });
 
       /** fecth map data from server. */
@@ -60,7 +61,7 @@ class App extends React.Component {
 
         <Modal isOpen={this.props.operationModal} toggle={this.props.toggleOperationPanelModal} >
           <ModalHeader toggle={this.props.toggleOperationPanelModal}>
-            <OperationPanel.Title />
+            OperationPanel.Title
           </ModalHeader>
           <ModalBody>
             <OperationPanel />
