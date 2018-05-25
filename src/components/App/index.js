@@ -1,7 +1,7 @@
 import React from 'react';
 import { ThirtySeven } from 'common-utils';
 import { connect } from 'react-redux';
-import { Nav, NavItem, NavLink, Modal, ModalHeader, ModalBody } from 'reactstrap';
+import { Nav, NavItem, NavLink } from 'reactstrap';
 import MapComponent from 'components/Map';
 import OperationPanel from 'components/OperationPanel';
 import { CustomerReduxCreator, MapReduxCreator, WindowReduxCreator } from 'actions/creators';
@@ -59,16 +59,7 @@ class App extends React.Component {
     return (
       <div>
 
-
-
-        <Modal isOpen={this.props.operationModal} toggle={this.props.toggleOperationPanelModal} >
-          <ModalHeader toggle={this.props.toggleOperationPanelModal}>
-            <OperationPanel.Title />
-          </ModalHeader>
-          <ModalBody>
-            <OperationPanel />
-          </ModalBody>
-        </Modal>
+        <OperationPanel />
 
         { this.state.maps ? (
           <div className="mt-3">
