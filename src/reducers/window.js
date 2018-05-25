@@ -5,7 +5,10 @@ import { WINDOW } from '../actions';
 
 const initalState = {
   loginForm: false,
-  operationModal: false
+  operationModal: {
+    modalShow: false,
+    currentCustomerId: null
+  }
 };
 
 const window = (state = initalState, action) => {
@@ -16,7 +19,17 @@ const window = (state = initalState, action) => {
       });
     case WINDOW.OPERATION_PANEL.TOGGLE:
       return Object.assign({}, state, {
-        operationModal: !state.operationModal
+        operationModal: {
+          ...state.operationModal,
+          modalShow: !state.operationModal.modalShow
+        }
+      });
+    case WINDOW.OPERATION_PANEL.SET_CURRENT_CUSTOMERID:
+      return Object.assign({}, state, {
+        operationModal: {
+          ...state.operationModal,
+          currentCustomerId: action.customerId
+        }
       });
     default:
       return state;

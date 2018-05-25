@@ -56,7 +56,8 @@ export const withOperationPanelTrigger = (WrappedComponent) => {
     }
 
     toggleOperationPanel() {
-      console.log('!!');
+      this.props.setCurrentCustomerId(this.props.customerId);
+      this.props.toggleOperationPanelModal();
     }
 
     render() {
@@ -70,6 +71,9 @@ export const withOperationPanelTrigger = (WrappedComponent) => {
     return {
       toggleOperationPanelModal: () => {
         dispatch(WindowReduxCreator.operationPanel.toggleModal())
+      },
+      setCurrentCustomerId: (customerId) => {
+        dispatch(WindowReduxCreator.operationPanel.setCurrentCustomerId(customerId))
       }
     };
   };

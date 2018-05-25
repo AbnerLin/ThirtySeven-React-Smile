@@ -20,7 +20,6 @@ class LoginForm extends React.Component {
     super(props);
     this.state = {
       force: this.props.force, // force login, the modal will not dismiss if true.
-      // modalShow: this.props.modalShow,
       btnDisabled: true,
       errorMsg: null
     }
@@ -29,12 +28,6 @@ class LoginForm extends React.Component {
     this.login = this.login.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-
-  // componentWillReceiveProps(nextProps) {
-  //   this.setState({
-  //     modalShow: nextProps.modalShow
-  //   });
-  // }
 
   toggle() {
     if (this.state.force) {
@@ -147,11 +140,7 @@ const mapDispatchToProps = dispatch => {
   return {
     loginSucceed: userInfo => {
       dispatch(AuthReduxCreator.setAuth(userInfo));
-      // dispatch(WindowReduxCreator.login.hideModal());
     },
-    // hideModal: () => {
-    //   dispatch(WindowReduxCreator.login.hideModal());
-    // }
     toggleModal: () => {
       dispatch(WindowReduxCreator.login.toggleModal());
     }

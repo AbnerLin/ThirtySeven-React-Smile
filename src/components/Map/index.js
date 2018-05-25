@@ -113,32 +113,36 @@ class Map extends React.Component {
         items = itemList.map((item) => {
 
           /** check if furnish is table, and if in use. */
-          var inUse = _.find(this.props.customerInfo, (o) => {
+          var customer = _.find(this.props.customerInfo, (o) => {
             return o.furnish === item.furnishid;
           });
 
           var furnishClass = null;
-          if(inUse) {
-            furnishClass = inUse.furnishObj.furnishclass;
-          } else {
-            /** find table class uuid */
-            var tableClass = MapUtils.FurnishClass.getByName('TABLE').classid;
+          var HocFurnish = Furnish;
 
-            /** find empty table class uuid */
-            var emptyTableClass = MapUtils.FurnishClass.getByName('EMPTY_TABLE').classid;
+          /** find table class uuid */
+          var tableClass = MapUtils.FurnishClass.getByName('TABLE').classid;
+          /** find empty table class uuid */
+          var emptyTableClass = MapUtils.FurnishClass.getByName('EMPTY_TABLE').classid;
 
-            furnishClass = emptyTableClass;
-            if(item.furnishclass !== tableClass) {
-              furnishClass = item.furnishclass;
+          if (item.furnishclass === tableClass) {
+            if (customer) {
+              furnishClass = tableClass;
+            } else {
+              furnishClass = emptyTableClass;
             }
+            /** hoc */
+            HocFurnish = withOperationPanelTrigger(Furnish);
+          } else {
+            furnishClass = item.furnishclass;
           }
 
           /** hoc */
-          const Clickable = withOperationPanelTrigger(Furnish);
-          const Draggable = withDraggable(Clickable);
+          const Draggable = withDraggable(HocFurnish);
 
           return (
             <Draggable
+                customerId={customer ? customer.customerid : ''}
                 name={item.name}
                 type={furnishClass}
                 key={item.furnishid}

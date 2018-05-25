@@ -1,7 +1,7 @@
 import React from 'react';
 import { ThirtySeven } from 'common-utils';
 import { connect } from 'react-redux';
-import { Button, Nav, NavItem, NavLink, Modal, ModalHeader, ModalBody } from 'reactstrap';
+import { Nav, NavItem, NavLink, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import MapComponent from 'components/Map';
 import OperationPanel from 'components/OperationPanel';
 import { CustomerReduxCreator, MapReduxCreator, WindowReduxCreator } from 'actions/creators';
@@ -16,13 +16,14 @@ class App extends React.Component {
         focusTabIndex: 0,
         operationPanelModal: false
     };
+
     this.navOnClick = this.navOnClick.bind(this);
     this.operationPanelModalToggle = this.operationPanelModalToggle.bind(this);
   }
 
   async componentWillReceiveProps(nextProps) {
-    if(nextProps.isLogin) {
 
+    if(this.props.isLogin !== nextProps.isLogin) {
       /** fetch furnish class data from server. */
       await ThirtySeven.ajax.get('/map/furnishClass').then(res => {
         this.props.initFurnishClass(res._data);
@@ -31,7 +32,6 @@ class App extends React.Component {
       /** fetch customer data from server. */
       await ThirtySeven.ajax.get('customer').then(res => {
         this.props.initCustomerInfo(res._data);
-        console.log(res._data);
       });
 
       /** fecth map data from server. */
@@ -59,15 +59,16 @@ class App extends React.Component {
     return (
       <div>
 
+
+
         <Modal isOpen={this.props.operationModal} toggle={this.props.toggleOperationPanelModal} >
           <ModalHeader toggle={this.props.toggleOperationPanelModal}>
-            OperationPanel.Title
+            <OperationPanel.Title />
           </ModalHeader>
           <ModalBody>
             <OperationPanel />
           </ModalBody>
         </Modal>
-        <Button color="secondary" onClick={this.props.toggleOperationPanelModal}>Cancel</Button>
 
         { this.state.maps ? (
           <div className="mt-3">
@@ -96,7 +97,7 @@ class App extends React.Component {
 const mapStateToProps = state => {
   return {
     isLogin: state.auth.isLogin,
-    operationModal: state.window.operationModal
+    operationModal: state.window.operationModal.modalShow
   };
 };
 

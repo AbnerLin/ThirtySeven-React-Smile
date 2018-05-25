@@ -1,6 +1,8 @@
 import React from 'react';
 import { Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
 import CustomerInfo from 'components/CustomerInfo';
+import { connect } from 'react-redux';
+import _ from 'lodash';
 
 class OperationPanel extends React.Component {
 
@@ -10,6 +12,9 @@ class OperationPanel extends React.Component {
      BOOKING_HISTORY: { index: '3', title: 'Booking history' }
   };
 
+  static TitleContext = '';
+  static Title = () => <div>{OperationPanel.TitleContext}</div>;
+
   constructor(props) {
     super(props);
 
@@ -17,6 +22,22 @@ class OperationPanel extends React.Component {
     this.state = {
       activeTab: OperationPanel.PanelType.CUSTOMER_INFO.index
     };
+
+  }
+
+  componentWillMount() {
+    OperationPanel.TitleContext = '';
+    let customer = _.find(this.props.customerInfo, (o) => {
+      return o.customerid === this.props.customerId;
+    });
+
+    if(!customer)
+      return;
+
+    OperationPanel.TitleContext = (() => {
+      let infos = [customer.furnishObj.name, customer.name];
+      return infos.join('_');
+    })();
   }
 
   navOnClick(tab) {
@@ -46,7 +67,7 @@ class OperationPanel extends React.Component {
         </Nav>
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId={OperationPanel.PanelType.CUSTOMER_INFO.index}>
-            <CustomerInfo />
+            <CustomerInfo customerId={this.props.customerId} />
           </TabPane>
           <TabPane tabId={OperationPanel.PanelType.BOOKING_PANEL.index}>
             booking panel
@@ -58,7 +79,16 @@ class OperationPanel extends React.Component {
       </div>
     );
   }
-
 }
 
-export default OperationPanel;
+const mapStateToProps = state => {
+  return {
+    customerId: state.window.operationModal.currentCustomerId,
+    customerInfo: state.customer.customerInfo,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  null
+)(OperationPanel);

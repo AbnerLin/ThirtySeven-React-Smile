@@ -15,6 +15,12 @@ class Window {
       return {
         type: WINDOW.OPERATION_PANEL.TOGGLE
       }
+    },
+    setCurrentCustomerId: (customerId) => {
+      return {
+        type: WINDOW.OPERATION_PANEL.SET_CURRENT_CUSTOMERID,
+        customerId
+      }
     }
   }
 
