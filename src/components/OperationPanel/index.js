@@ -1,6 +1,7 @@
 import React from 'react';
 import { Nav, NavItem, NavLink, TabContent, TabPane, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import CustomerInfo from 'components/CustomerInfo';
+import CheckIn from 'components/CheckIn';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { WindowReduxCreator } from 'actions/creators';
@@ -19,8 +20,10 @@ class OperationPanel extends React.Component {
     this.navOnClick = this.navOnClick.bind(this);
     this.state = {
       header: '',
-      activeTab: OperationPanel.PanelType.CUSTOMER_INFO.index
+      activeTab: OperationPanel.PanelType.CUSTOMER_INFO.index,
+      checkIn: false
     };
+
   }
 
   componentWillReceiveProps(nextProps) {
@@ -29,15 +32,19 @@ class OperationPanel extends React.Component {
         return o.customerid === nextProps.customerId;
       });
 
-      if(!customer)
-        return;
-
-      this.setState({
-        header: (() => {
-          let infos = [customer.furnishObj.name, customer.name];
-          return infos.join('_');
-        })()
-      });
+      if(!customer) {
+        this.setState({
+          checkIn: true
+        });
+      } else {
+        this.setState({
+          checkIn: false,
+          header: (() => {
+            let infos = [customer.furnishObj.name, customer.name];
+            return infos.join('_');
+          })()
+        });
+      }
     }
   }
 
@@ -50,35 +57,41 @@ class OperationPanel extends React.Component {
   }
 
   render() {
-    var Content = () =>
-      <div>
-        <Nav tabs>
-          {
-            Object.values(OperationPanel.PanelType).map((obj, index) =>
-              <NavItem key={obj.index}>
-                <NavLink
-                  href="#"
-                  active={obj.index === this.state.activeTab}
-                  onClick={() => this.navOnClick(obj.index)}>
-                  { obj.title }
-                </NavLink>
-              </NavItem>
-            )
-          }
-        </Nav>
-        <TabContent activeTab={this.state.activeTab}>
-          <TabPane tabId={OperationPanel.PanelType.CUSTOMER_INFO.index}>
-            <CustomerInfo customerId={this.props.customerId} />
-          </TabPane>
-          <TabPane tabId={OperationPanel.PanelType.BOOKING_PANEL.index}>
-            booking panel
-          </TabPane>
-          <TabPane tabId={OperationPanel.PanelType.BOOKING_HISTORY.index}>
-            booking history
-          </TabPane>
-        </TabContent>
-      </div>;
+    let Content;
 
+    if(!this.state.checkIn) {
+      Content = () =>
+        <div>
+          <Nav tabs>
+            {
+              Object.values(OperationPanel.PanelType).map((obj, index) =>
+                <NavItem key={obj.index}>
+                  <NavLink
+                    href="#"
+                    active={obj.index === this.state.activeTab}
+                    onClick={() => this.navOnClick(obj.index)}>
+                    { obj.title }
+                  </NavLink>
+                </NavItem>
+              )
+            }
+          </Nav>
+          <TabContent activeTab={this.state.activeTab}>
+            <TabPane tabId={OperationPanel.PanelType.CUSTOMER_INFO.index}>
+              <CustomerInfo customerId={this.props.customerId} />
+            </TabPane>
+            <TabPane tabId={OperationPanel.PanelType.BOOKING_PANEL.index}>
+              booking panel
+            </TabPane>
+            <TabPane tabId={OperationPanel.PanelType.BOOKING_HISTORY.index}>
+              booking history
+            </TabPane>
+          </TabContent>
+        </div>;
+    } else {
+      Content = () =>
+        <CheckIn furnishId={this.props.furnishId} />;
+    }
 
     return (
       <Modal isOpen={this.props.operationModal} toggle={this.props.toggleOperationPanelModal} >
@@ -95,8 +108,9 @@ class OperationPanel extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    customerId: state.window.operationModal.currentCustomerId,
+    customerId: state.window.operationModal.customerId,
     customerInfo: state.customer.customerInfo,
+    furnishId: state.window.operationModal.furnishId,
     operationModal: state.window.operationModal.modalShow
   };
 };
