@@ -16,10 +16,11 @@ class Window {
         type: WINDOW.OPERATION_PANEL.TOGGLE
       }
     },
-    setCurrentCustomerId: (customerId) => {
+    setPanelInfo: (customerId, furnishId) => {
       return {
-        type: WINDOW.OPERATION_PANEL.SET_CURRENT_CUSTOMERID,
-        customerId
+        type: WINDOW.OPERATION_PANEL.SET_PANEL_INFO,
+        customerId,
+        furnishId
       }
     }
   }

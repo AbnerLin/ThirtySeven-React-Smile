@@ -7,7 +7,8 @@ const initalState = {
   loginForm: false,
   operationModal: {
     modalShow: false,
-    currentCustomerId: null
+    customerId: null,
+    furnishId: null
   }
 };
 
@@ -24,11 +25,12 @@ const window = (state = initalState, action) => {
           modalShow: !state.operationModal.modalShow
         }
       });
-    case WINDOW.OPERATION_PANEL.SET_CURRENT_CUSTOMERID:
+    case WINDOW.OPERATION_PANEL.SET_PANEL_INFO:
       return Object.assign({}, state, {
         operationModal: {
           ...state.operationModal,
-          currentCustomerId: action.customerId
+          customerId: action.customerId,
+          furnishId: action.furnishId
         }
       });
     default:

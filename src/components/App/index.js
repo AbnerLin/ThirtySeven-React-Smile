@@ -14,12 +14,10 @@ class App extends React.Component {
     super(props);
     this.state = {
         maps: null,
-        focusTabIndex: 0,
-        operationPanelModal: false
+        focusTabIndex: 0
     };
 
     this.navOnClick = this.navOnClick.bind(this);
-    this.operationPanelModalToggle = this.operationPanelModalToggle.bind(this);
   }
 
   async componentWillReceiveProps(nextProps) {
@@ -47,12 +45,6 @@ class App extends React.Component {
   navOnClick(index, mapId) {
     this.setState({
         focusTabIndex: index
-    });
-  }
-
-  operationPanelModalToggle() {
-    this.setState({
-      operationPanelModal: !this.state.operationPanelModal
     });
   }
 
@@ -88,8 +80,7 @@ class App extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    isLogin: state.auth.isLogin,
-    operationModal: state.window.operationModal.modalShow
+    isLogin: state.auth.isLogin
   };
 };
 
@@ -100,9 +91,6 @@ const mapDispatchToProps = dispatch => {
     },
     initFurnishClass: furnishClass => {
       dispatch(MapReduxCreator.FurnishClass.initFurnishClass(furnishClass));
-    },
-    toggleOperationPanelModal: () => {
-      dispatch(WindowReduxCreator.operationPanel.toggleModal())
     }
   };
 };

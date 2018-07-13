@@ -6,7 +6,8 @@ import _ from 'lodash';
 class CustomerInfo extends React.Component {
 
   static propTypes = {
-    customerId: PropTypes.string.isRequired
+    customerId: PropTypes.string.isRequired,
+    customerInfo: PropTypes.array
   };
 
   componentWillMount() {
@@ -24,8 +25,7 @@ class CustomerInfo extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    customerInfo: state.customer.customerInfo,
-    customerId: state.window.operationModal.currentCustomerId
+    customerInfo: state.customer.customerInfo
   };
 };
 
