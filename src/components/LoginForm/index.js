@@ -6,7 +6,6 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Form, Al
 import { AuthReduxCreator, WindowReduxCreator } from 'actions/creators';
 import { connect } from 'react-redux';
 
-import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 
 class LoginForm extends React.Component {

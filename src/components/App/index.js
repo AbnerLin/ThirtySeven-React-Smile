@@ -5,6 +5,7 @@ import { Nav, NavItem, NavLink } from 'reactstrap';
 import MapComponent from 'components/Map';
 import OperationPanel from 'components/OperationPanel';
 import { CustomerReduxCreator, MapReduxCreator, WindowReduxCreator } from 'actions/creators';
+import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 
 class App extends React.Component {
